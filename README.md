@@ -3,12 +3,10 @@
 
 Este repositório contém projetos desenvolvidos para praticar **lógica de programação em Python**, com foco em aprendizado e evolução contínua.
 
-📂 Projetos
+PROJETOS:
 
-
-=================================
 📒 Agenda de Contatos
-=================================
+
 Sistema em terminal com funcionalidades de:  
 - Adicionar contatos  
 - Listar contatos  
