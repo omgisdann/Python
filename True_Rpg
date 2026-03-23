@@ -1,0 +1,92 @@
+print("TRUE RPG")
+
+def create_player(nome,vida=50,ataque=100,pocoes=3):
+    player={}
+    player['nome']=nome
+    player['vida']=vida
+    player['ataque']=ataque
+    player['pocoes']=pocoes
+    return player
+
+oponente = {'nome':'nêmesis','vida':50,'ataque':100}
+
+contador = 0
+while contador<1:
+    player = create_player(input("digite o nome do seu personagem " ))
+    contador+=1
+
+while True:
+    print (" THE BATTLE WILL BEGIN! ")
+
+    import random
+    dado = random.randint(0,1)
+
+    if player['vida'] <= 0 or oponente ['vida'] <= 0:
+        if player['vida'] <= 0:
+            print("você perdeu")
+        else:
+            print("você ganhou")
+        break           
+
+
+    elif dado == 0:
+        print("SUA RODADA, BOA SORTE")
+        import random
+        segundo_dado = random.randint(0,10)
+
+        if segundo_dado == 0:
+            print("você errou o alvo!")
+        elif segundo_dado == 10:
+            print("ACERTO CRÍTICO")
+            oponente['vida']=oponente['vida']-segundo_dado
+        else:
+             oponente['vida']=oponente['vida']-segundo_dado   
+
+
+        if player ['vida'] < 30 and player ['pocoes'] > 0 :
+            pergunta = input ("você gostaria de usar sua poção? ").lower()
+
+            if pergunta == 'sim':
+                    player['vida'] = player['vida'] + 20
+                    player['pocoes']-=1
+
+            else:
+                print("PRÓXIMA RODADA")
+
+        else:
+            print("impossivel curar.")
+
+
+    elif dado == 1:
+        print("RODADA DO SEU OPONENTE, BOA SORTE!")
+        import random
+        terceiro_dado = random.randint(0,10)
+
+        if terceiro_dado == 0:
+            print("Você escapou!")
+        elif terceiro_dado == 10:
+            print("ACERTO CRÍTICO") ### caso o inimigo acerte um dano critico, sua vida será recuperada
+            player['vida']=player['vida']-terceiro_dado
+            if oponente ['vida'] < 20:
+                oponente['vida']= oponente['vida'] + 10
+        else:
+             player['vida']=player['vida']-terceiro_dado   
+
+        if player ['vida'] < 30 and player ['pocoes'] > 0 :
+            pergunta = input ("você gostaria de usar sua poção? ").lower()
+
+            if pergunta == 'sim':
+                    player ['vida'] = player['vida'] + 20
+                    player ['pocoes']-=1
+            else:
+                print("PRÓXIMA RODADA")
+        else:
+            print("impossivel curar.")
+
+
+                    
+    
+
+
+
+
