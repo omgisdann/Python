@@ -1,58 +1,29 @@
-🐍 Meus Projetos em Python
+# 🐍 Projetos em Python
 
+Repositório focado no desenvolvimento de projetos práticos em Python, com aplicação direta de lógica de programação e construção de soluções reais.
 
-Este repositório contém projetos desenvolvidos para praticar **lógica de programação em Python**, com foco em aprendizado e evolução contínua.
+## 💡 Sobre
 
-PROJETOS:
+Aqui você encontrará implementações que vão além de exercícios básicos, explorando a construção de sistemas completos em ambiente de terminal, com foco em tomada de decisão, validação de dados e controle de fluxo.
 
-📒 Agenda de Contatos
+Cada projeto é desenvolvido com o objetivo de simular situações reais, reforçando a capacidade de estruturar código, lidar com erros e criar aplicações funcionais do início ao fim.
 
-Sistema em terminal com funcionalidades de:  
-- Adicionar contatos  
-- Listar contatos  
-- Buscar por email  
-- Atualizar dados  
-- Remover contatos  
+## 🚀 Principais práticas aplicadas
 
----------------------------------
+* Estruturas de decisão e repetição
+* Tratamento de exceções (try/except)
+* Manipulação e validação de dados
+* Lógica aplicada a cenários reais
+* Organização e legibilidade de código
 
+## 📈 Objetivo
 
-🎯 Jogo de Adivinhação
+Desenvolver uma base sólida em programação e evoluir constantemente na construção de soluções cada vez mais estruturadas e eficientes.
 
-O usuário tenta adivinhar um número aleatório entre 1 e 100, recebendo dicas de **maior ou menor** e acompanhando o número de tentativas.
+## 🛠️ Tecnologias
 
----------------------------------
+* Python 3
 
-📖 Gerador de Histórias Aleatórias
+---
 
-Programa interativo em que o usuário cria um personagem e escolhe caminhos dentro de uma história:  
-- Eventos diferentes baseados nas decisões  
-- Sistema de tentativas  
-- Possibilidade de jogar novamente
-
----------------------------------
-
-
-🎮 Mini RPG
-
-Jogo de combate em turnos entre o jogador e um oponente:  
-- ⚔️ Rodadas aleatórias entre jogador e inimigo  
-- 🛡️ Opções de ações: atacar, defender ou usar poção  
-- ❤️ Sistema de vida, ataque e poções  
-- 🎲 Estratégia e desafio em cada partida  
-
----------------------------------
-
-
-🚀 Tecnologias
-
-- Python 3
-
----------------------------------
-
-
-📌 Objetivo
-
-Acompanhar minha evolução em programação, reunindo **projetos práticos** e aplicando conceitos fundamentais de Python.
-
----------------------------------
+💬 Aberto a feedbacks, conexões e oportunidades na área de desenvolvimento.
