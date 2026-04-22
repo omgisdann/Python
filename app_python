@@ -1,0 +1,129 @@
+pessoas = {}
+def cadastro ():
+    '''parte do nome'''
+    first_flag = True
+    while first_flag:
+        nome = input("digite seu nome! ")
+        variavel = nome.isdigit()
+        if variavel == True:
+            print("digite um nome válido!")
+        else:
+            pessoas['NOME'] = nome
+            first_flag = False  
+
+    '''parte da idade'''
+    second_flag = True
+    while second_flag:
+        try:
+            idade = int(input("digite a sua idade "))
+            pessoas['IDADE'] = idade
+            second_flag=False
+        except ValueError:
+            print("digite um valor válido!")
+
+    '''parte do local'''
+    third_flag = True
+    while third_flag:
+        residencia = input("digite o local onde reside ")
+        variavel = residencia.isdigit()
+        if variavel == True:
+            print("digite um nome válido!")
+        else:
+            pessoas['RESIDÊNCIA'] = residencia
+            third_flag = False
+            
+            
+        
+    '''depósito do dinheiro!'''
+    fourth_flag = True
+    while fourth_flag:
+        try:
+            dinheiro = float(input("digite a quantidade de dinheiro "))
+            pessoas['CONTA'] = dinheiro
+            fourth_flag=False
+            return pessoas
+        except ValueError:
+            print("digite um valor válido!")
+
+
+while True:
+    print("Boas vindas ao APP WUMIX!")
+    print("para começar vamos realizar o seu cadastro na PLATAFORMA!")
+    primeiro_cadastro = cadastro()
+    print(f'parabéns {primeiro_cadastro['NOME']} você foi cadastrado na plataforma!')
+
+
+    while True:
+        print("\n===== MENU =====")
+        print("1 - Apostar")
+        print("2 - Editar dados")
+        print("3 - Apagar conta")
+        try:
+            opcao = int(input("Escolha uma opção: "))
+        except ValueError:
+            print("digite uma opção válida!")
+        else:
+                if opcao == 1 and primeiro_cadastro['IDADE']>=18:
+                    print("BEM VINDO A ROLETA WUMIX! SE CAIR PAR, VOCÊ GANHA, CASO CONTRÁRIO, VOCÊ PERDE!")
+                    from random import randint
+                    variavel = randint(0,500)
+                    print(f" o numero sorteado foi {variavel} !")
+                    if variavel %2==0:
+                        pessoas['CONTA']+=variavel
+                    else:
+                        pessoas["CONTA"]-=variavel
+                        print(pessoas["CONTA"])
+                else:
+                    print("IDADE NÃO PERMITIDA")
+                    break
+                if opcao == 2:
+                    print("EDIÇÃO DE DADOS")
+                    while True:
+                        usuario = input ("qual parte do seu cadastro você quer alterar? aperte Q para sair! ")
+                        if usuario in pessoas:
+                                if usuario == 'IDADE':
+                                    new_flag=True
+                                    while new_flag:
+                                        try:
+                                            pessoas['IDADE'] = int(input("digite sua nova idade  "))
+                                        except ValueError:
+                                            print("digite um numero válido para alteramos a sua IDADE!")
+                                        else:
+                                            new_flag=False
+
+                                elif usuario == 'CONTA':
+                                    new_flag=True
+                                    while new_flag:
+                                        try:
+                                            pessoas['CONTA'] = int(input("digite o novo saldo  "))
+                                        except ValueError:
+                                            print("digite um numero válido para alteramos a sua CONTA!")
+                                        else:
+                                            new_flag=False
+
+                                elif usuario == 'RESIDÊNCIA':
+                                    new_flag = True
+                                    while new_flag:
+                                        entrada = input("digite seu novo local  ")
+                                        variavel = entrada.isdigit() 
+                                        if variavel == True:
+                                            print("digite um nome válido para alteramos a sua nova residência!")
+                                        else:
+                                            pessoas['RESIDÊNCIA']=entrada
+                                            new_flag=False                
+                        if usuario == 'Q':
+                            break
+                        else:
+                            print("digite uma opção válida! ")
+
+                elif opcao == 3:
+                    print("APAGAR CONTA")
+                    decisao_final = input("você deseja apagar a sua conta?  ").lower()
+                    if decisao_final == 'sim':
+                        del primeiro_cadastro
+                        break
+                    else:
+                        print("redirecionando as outras opções!")
+                        
+                    
+                    
