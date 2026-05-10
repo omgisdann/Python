@@ -1,0 +1,60 @@
+class Produto:
+    def __init__(self ,nome,preco):
+        self.nome = nome
+        self.preco = preco
+
+
+    
+    def criar_produto (self):
+        self.criado = self.nome , self.preco
+        
+
+
+
+
+class Carrinho:
+    def __init__(self):
+        self.lista = []
+
+
+
+    def adicionar_ao_carrinho (self,outro):
+        self.lista.append(outro.criado)
+
+
+    def deletar_produto (self, produto_a_remover):
+        for i in self.lista:
+            if produto_a_remover in i:
+                self.lista.remove(i)
+        print(self.lista)
+
+
+
+    def mostrar_carrinho(self):
+        print(self.lista)
+
+
+
+    def calcular_total(self):
+        acumulador = 0
+        for i in self.lista:
+            acumulador += i[1]
+        print(f'preço dos produtos foram {acumulador} R$' )
+
+
+teste = Produto ('Ypê', 8) 
+teste.criar_produto()
+car = Carrinho()
+car.adicionar_ao_carrinho(teste)
+teste1 = Produto ('Amaciante', 14) 
+teste1.criar_produto()
+car.adicionar_ao_carrinho(teste1)
+teste2 = Produto ('Sabão', 10) 
+teste2.criar_produto()
+car.adicionar_ao_carrinho(teste2)
+
+
+
+car.deletar_produto('Sabão')
+car.mostrar_carrinho()
+car.calcular_total()
