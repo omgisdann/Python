@@ -1,0 +1,14 @@
+[33m6442640[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{0}: commit (amend): Adiciona sistema de compras
+[33m8081542[m HEAD@{1}: commit: Adicionando projeto Conta Bancaria com hash
+[33m0ec506c[m HEAD@{2}: commit (amend): Api's em Python
+[33m00eab1a[m HEAD@{3}: commit (amend): API'S PYTHON
+[33mb53dfab[m HEAD@{4}: commit (amend): API de Controle Financeiro com Flask
+[33m81f9da9[m HEAD@{5}: commit: Api's Python
+[33m97e4f27[m HEAD@{6}: commit (amend): 🐍 Primeiro commit
+[33ma24c5e2[m HEAD@{7}: reset: moving to HEAD
+[33ma24c5e2[m HEAD@{8}: commit: Primeiro commit
+[33m74f613e[m HEAD@{9}: pull origin main --rebase (finish): returning to refs/heads/main
+[33m74f613e[m HEAD@{10}: pull origin main --rebase (pick): :tada: Commit Inicial
+[33m16bb782[m HEAD@{11}: pull origin main --rebase (start): checkout 16bb7827c94eb010520b00aee6f39ab49dd829d4
+[33ma63878f[m HEAD@{12}: Branch: renamed refs/heads/master to refs/heads/main
+[33ma63878f[m HEAD@{14}: commit (initial): :tada: Commit Inicial
