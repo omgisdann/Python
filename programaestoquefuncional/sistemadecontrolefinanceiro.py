@@ -90,8 +90,7 @@ while True:
                                     """, ( 
                                     movimentacao._descricao, 
                                     movimentacao._categoria, 
-                                    movimentacao._valor,            #fala de onde vai vim os valores que preencherá as colunas
-                                    movimentacao._tipo, 
+                                    movimentacao._valor,           
                                     movimentacao._data
                                     ))
 
