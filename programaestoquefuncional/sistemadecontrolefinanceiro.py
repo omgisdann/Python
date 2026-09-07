@@ -96,7 +96,7 @@ while True:
 
             conexao.commit()
         except NameError:
-            conexao = sqlite3.connect("financeiro.db") ##É CRIADO O BANCO DE DADOS
+            conexao = sqlite3.connect("financeiro.db") 
             cursor = conexao.cursor()
             cursor.execute("""
                             CREATE TABLE movimentacoes(
@@ -107,7 +107,7 @@ while True:
                                 tipo TEXT,
                                 data TEXT
                                 )    
-                            """)  ##É CRIADO AS TABELAS E COLUNAS (VAZIAS)
+                            """)  
             
                         
             cursor.execute("""                
@@ -116,7 +116,7 @@ while True:
                         """, ( 
                         movimentacao._descricao, 
                         movimentacao._categoria, 
-                        movimentacao._valor,            #fala de onde vai vim os valores que preencherá as colunas
+                        movimentacao._valor,            
                         movimentacao._tipo, 
                         movimentacao._data
                         ))
