@@ -14,6 +14,7 @@ janela.geometry("1200x500")
 texto1 = tk.Label(janela, text='Usuário')
 texto1.grid(row=0, column=0, sticky='e')
 
+global entrada1
 entrada1 = tk.Entry(janela, width=20)
 entrada1.grid(row=0, column=1, padx=5, pady=5)
 
@@ -96,35 +97,36 @@ def declaracao():
         resultadoemail = cursor.fetchall()
         if resultadousuario == []:
             if resultadoemail == []:
-                if entrada1.get():
+                if entrada1.get() != "":
                     dados['usuario'] = entrada1.get()
                     possibilidade = tk.Label(janela, text='USUÁRIO VÁLIDO!', fg='green')
                     possibilidade.grid(row=0, column=3, sticky='e')
                 else:
-                    possibilidade = tk.Label(janela, text='USUÁRIO inválido!', fg='red')
+                    possibilidade = tk.Label(janela, text='USUÁRIO INVÁLIDO!', fg='red')
                     possibilidade.grid(row=0, column=3, sticky='e')
-                    dados['usuario'] = '?'
-                if entrada2.get():
+                    botao_erro = tk.messagebox.showerror('Erro', 'Digite um usuário válido!')
+                if entrada2.get() != "":
                     dados['E-mail'] = entrada2.get()
                     possibilidade = tk.Label(janela, text='E-MAIL VÁLIDO!', fg='green')
                     possibilidade.grid(row=1, column=3, sticky='e')
                 else:
-                    possibilidade = tk.Label(janela, text='E-mail inválido!', fg='red')
+                    possibilidade = tk.Label(janela, text='E-MAIL INVÁLIDO!', fg='red')
                     possibilidade.grid(row=1, column=3, sticky='e')
-                    dados['E-mail'] = '?'
-                if entrada3.get():
+                    botao_erro = tk.messagebox.showerror('Erro', 'Digite um email válido!')
+                if entrada3.get() != "":
                     dados['Senha'] = entrada3.get()
                     possibilidade = tk.Label(janela, text='SENHA VÁLIDA!', fg='green')
                     possibilidade.grid(row=2, column=5, sticky='e')
                 else:
-                    dados['Senha'] = password
-                    possibilidade = tk.Label(janela, text='SENHA VÁLIDA GERADA AUTOMATICAMENTE!', fg='green')
-                    possibilidade.grid(row=2, column=5, sticky='e')
-                    if not password:
-                        possibilidade = tk.Label(janela, text='Senha inválida!', fg='red')
+                    if entrada2.get() != "" and entrada1.get() != "":
+                        gerar_senha()
+                        botao_caso = tk.messagebox.showinfo('Aviso', 'Senha gerada automaticamente!')
+                        dados['Senha'] = password
+                        possibilidade = tk.Label(janela, text='SENHA GERADA AUTO!', fg='green')
                         possibilidade.grid(row=2, column=5, sticky='e')
-                        dados['Senha'] = '?'
-
+                    else:
+                        possibilidade = tk.Label(janela, text='PREENCHA EMAIL E USUÁRIO', fg='red')
+                        possibilidade.grid(row=2, column=5, sticky='e')
 
                 try:
                     conexao = sqlite3.connect("SQL.db")
@@ -138,6 +140,8 @@ def declaracao():
                         dados['Senha']
                         ))
                     conexao.commit()
+                    tk.messagebox.showinfo(title='Aviso', message="Cadastro realizado com sucesso!")
+
                 except:
                     conexao = sqlite3.connect("SQL.db")
                     cursor = conexao.cursor()
@@ -164,34 +168,34 @@ def declaracao():
             possibilidade = tk.Label(janela, text='Não é possível cadastrar um usuario já existente!', fg='red')
             possibilidade.grid(row=0, column=3, sticky='e')
     except:
-        if entrada1.get():
+        if entrada1.get() != "":
             dados['usuario'] = entrada1.get()
             possibilidade = tk.Label(janela, text='USUÁRIO VÁLIDO!', fg='green')
             possibilidade.grid(row=0, column=3, sticky='e')
         else:
-            possibilidade = tk.Label(janela, text='USUÁRIO inválido!', fg='red')
+            possibilidade = tk.Label(janela, text='USUÁRIO INVÁLIDO!', fg='red')
             possibilidade.grid(row=0, column=3, sticky='e')
-            dados['usuario'] = '?'
-        if entrada2.get():
+        if entrada2.get() != "":
             dados['E-mail'] = entrada2.get()
             possibilidade = tk.Label(janela, text='E-MAIL VÁLIDO!', fg='green')
             possibilidade.grid(row=1, column=3, sticky='e')
         else:
-            possibilidade = tk.Label(janela, text='E-MAIL inválido!', fg='red')
+            possibilidade = tk.Label(janela, text='E-MAIL INVÁLIDO!', fg='red')
             possibilidade.grid(row=1, column=3, sticky='e')
-            dados['E-mail'] = '?'
-        if entrada3.get():
+        if entrada3.get() != "":
             dados['Senha'] = entrada3.get()
             possibilidade = tk.Label(janela, text='SENHA VÁLIDA!', fg='green')
             possibilidade.grid(row=2, column=5, sticky='e')
         else:
-            dados['Senha'] = password
-            possibilidade = tk.Label(janela, text='SENHA VÁLIDA GERADA AUTOMATICAMENTE!', fg='green')
-            possibilidade.grid(row=2, column=5, sticky='e')
-            if not password:
-                possibilidade = tk.Label(janela, text='Senha inválida!', fg='red')
+            if entrada2.get() != "" and entrada1.get() != "":
+                gerar_senha()
+                botao_caso = tk.messagebox.showinfo('Aviso', 'Senha gerada automaticamente!')
+                dados['Senha'] = password
+                possibilidade = tk.Label(janela, text='SENHA GERADA AUTO!', fg='green')
                 possibilidade.grid(row=2, column=5, sticky='e')
-                dados['Senha'] = '?'
+            else:
+                possibilidade = tk.Label(janela, text='PREENCHA EMAIL E USUÁRIO', fg='red')
+                possibilidade.grid(row=2, column=5, sticky='e')
             try:
                 conexao = sqlite3.connect("SQL.db")
                 cursor = conexao.cursor()
@@ -205,25 +209,29 @@ def declaracao():
                 ))
                 conexao.commit()
             except:
-                conexao = sqlite3.connect("SQL.db")
-                cursor = conexao.cursor()
-                cursor.execute("""CREATE TABLE informacoesDOusuario(
-                id INTEGER PRIMARY KEY,
-                usuario TEXT,
-                email TEXT,
-                senha TEXT)
-                """)
-                            
-                cursor.execute("""
-                INSERT INTO informacoesDOusuario(usuario, email, senha)
-                VALUES(?,?,?)
-                """, (
-                dados['usuario'],
-                dados['E-mail'],
-                dados['Senha']
-                ))
-                conexao.commit()
+                if entrada1.get() != "" and entrada2.get() != "":
+                    conexao = sqlite3.connect("SQL.db")
+                    cursor = conexao.cursor()
+                    cursor.execute("""CREATE TABLE informacoesDOusuario(
+                    id INTEGER PRIMARY KEY,
+                    usuario TEXT,
+                    email TEXT,
+                    senha TEXT)
+                    """)
+                                
+                    cursor.execute("""
+                    INSERT INTO informacoesDOusuario(usuario, email, senha)
+                    VALUES(?,?,?)
+                    """, (
+                    dados['usuario'],
+                    dados['E-mail'],
+                    dados['Senha']
+                    ))
+                    conexao.commit()
+                else:
+                    tk.messagebox.showwarning(title='Erro', message='Não foi possivel realizar o cadastro!')
 
+                
 def gerar_senha():
     '''irá gerar uma senha segura para substituir a senha criada pelo usuário'''
     global password
@@ -305,31 +313,22 @@ def visualizar_informacoes():
     visualizar_tudo = tk.Label(nova, text=lista)
     visualizar_tudo.grid(row=3, column=1, padx=5, pady=5)
 
-
-def cancelar():
-    entrada1 = tk.Entry(janela, width=20)
-    entrada1.grid(row=0, column=1, padx=5, pady=5)
-
-    entrada2 = tk.Entry(janela, width=20)
-    entrada2.grid(row=1, column=1, padx=5, pady=5)
-
-
-    entrada3 = tk.Entry(janela, width=20)
-    entrada3.grid(row=2, column=1, padx=5, pady=5)
-
-
 def trocar_senha():
     '''Para realizar a troca, é necessário primeiro confirmar o nome de usuário,
     logo depois, inserir a nova senha e confirma-lá, antes de REALIZAR A TROCA.'''
     try:
-        conexao = sqlite3.connect("SQL.db")
-        cursor = conexao.cursor()
-        cursor.execute("""
-        UPDATE informacoesDOusuario
-        SET senha = ?
-        WHERE usuario = ?
-        """, [senha, nome])
-        conexao.commit()
+        caso = tk.messagebox.askyesno('Confirmação', 'Deseja realizar a alteração?')
+        if caso == True:
+            conexao = sqlite3.connect("SQL.db")
+            cursor = conexao.cursor()
+            cursor.execute("""
+            UPDATE informacoesDOusuario
+            SET senha = ?
+            WHERE usuario = ?
+            """, [senha, nome])
+            conexao.commit()
+        else:
+            print("Nenhum cadastro foi alterado!")
     except:
         print("Confirme primeiro o nome do usuário, logo após, confirme também a nova senha.")
 
@@ -357,24 +356,28 @@ def confirmar_novo_email():
 
 def alterar_email():
     try:
-        conexao = sqlite3.connect("SQL.db")
-        cursor = conexao.cursor()
-        cursor.execute("""
-        UPDATE informacoesDOusuario
-        SET email = ?
-        WHERE usuario = ?
-        """, [novo_email, nome_email])
-        conexao.commit()
+        caso = tk.messagebox.askyesno('Confirmação', 'Deseja realizar a alteração?')
+        if caso == True:
+            conexao = sqlite3.connect("SQL.db")
+            cursor = conexao.cursor()
+            cursor.execute("""
+            UPDATE informacoesDOusuario
+            SET email = ?
+            WHERE usuario = ?
+            """, [novo_email, nome_email])
+            
+            conexao.commit()
+        else:
+            print("Nenhuma alteração foi realizada!")
     except:
         print("Confirme primeiro o nome do usuário, logo após, confirme também a nova senha.")
 
 inicio = tk.Button(janela, text= 'Confirmar', command=declaracao).grid(row=2, column=2, padx=5, pady=5)
 copiarsenha = tk.Button(janela, text= 'Copiar senha', command=copiar_senha).grid(row=2, column=3, padx=5, pady=5)
-senha_aleatoria = tk.Button(janela, text= 'Gerar senha', command=gerar_senha).grid(row=2, column=4, padx = 5, pady = 5)
+senha_aleatoria = tk.Button(janela, text= 'Gerar senha', command=gerar_senha).grid(row=2, column=4)
 procurar_usuari0 = tk.Button(janela, text= 'Procurar', command=procurar_usuario).grid(row=3, column=2, padx=5, pady=5) 
 excluir = tk.Button(janela, text= 'Excluir', command=excluir_conta).grid(row=4, column=2, padx=5, pady=5) 
 visualizar = tk.Button(janela, text= 'Conferir', command=visualizar_informacoes).grid(row=9, column=1, padx=5, pady=5) 
-cancelar_cadastro = tk.Button(janela, text= 'Apagar', command=cancelar).grid(row=2, column=5, padx=5, pady=5) 
 botao_senha = tk.Button(janela, text= 'Confirmar', command=confirmar_senha).grid(row=7, column=5, sticky='e', padx=5, pady=5) 
 botao_usuario =  tk.Button(janela, text= 'Confirmar', command=confirmar_usuario).grid(row=7, column=2, sticky='e', padx=5, pady=5) 
 realizar_troca =  tk.Button(janela, text= 'Realizar troca Senha', command=trocar_senha).grid(row=7, column=6,padx=5, pady=5, sticky='e') 
