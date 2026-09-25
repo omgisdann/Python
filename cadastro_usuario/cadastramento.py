@@ -259,17 +259,21 @@ def procurar_usuario():
     WHERE usuario = ?
     """, [entrada4.get()])
     info = cursor.fetchall()
-    nova = tk.Toplevel(janela)
-    nova.title("Sites encontrados")
-    nova.geometry("300x200")
-    for informacao in info:
-        dicionario['Id'] = informacao[0]
-        dicionario['usuario'] = informacao[1]
-        dicionario['Email'] = informacao[2]
-        dicionario['Senha'] = informacao[3]
-        lista.append(dicionario.copy())
-    texto5 = tk.Label(nova, text=lista)
-    texto5.grid(row=3, column=1, padx=5, pady=5)
+    if info != []:
+        nova = tk.Toplevel(janela)
+        nova.title("Sites encontrados")
+        nova.geometry("300x200")
+        for informacao in info:
+            dicionario['Id'] = informacao[0]
+            dicionario['usuario'] = informacao[1]
+            dicionario['Email'] = informacao[2]
+            dicionario['Senha'] = informacao[3]
+            lista.append(dicionario.copy())
+        texto5 = tk.Label(nova, text=lista)
+        texto5.grid(row=3, column=1, padx=5, pady=5)
+    else:
+        messagebox.showerror('Erro', 'Nenhum usuário com esse nome!')
+       
 
 
  
@@ -277,18 +281,26 @@ def excluir_conta():
     '''irá remover a que tiver o mesmo nome do site'''
     conexao = sqlite3.connect("SQL.db")
     cursor = conexao.cursor()
-    caso = tk.messagebox.askyesno('Confirmação', 'Deseja realizar a exclusão?')
-    if caso == True:
-        cursor.execute("""
-        DELETE FROM informacoesDOusuario
-        WHERE usuario = ?
-        """, [entrada_parte_exclusao.get()])  
-        textoaviso = tk.Label(janela, text='Usuário excluido!', fg='green')     
-        textoaviso.grid(row=4, column=3, padx=5, pady=5) 
-        conexao.commit()
+    cursor.execute("""
+    SELECT *
+    FROM informacoesDOusuario
+    WHERE usuario = ?
+    """, [entrada_parte_exclusao.get()])
+    resultado = cursor.fetchall()
+    if resultado != []:
+        caso = tk.messagebox.askyesno('Confirmação', 'Deseja realizar a exclusão?')
+        if caso == True:
+            cursor.execute("""
+            DELETE FROM informacoesDOusuario
+            WHERE usuario = ?
+            """, [entrada_parte_exclusao.get()])  
+            textoaviso = tk.Label(janela, text='Usuário excluido!', fg='green')     
+            textoaviso.grid(row=4, column=3, padx=5, pady=5) 
+            conexao.commit()
+        else:
+            messagebox.showinfo('Confirmação', 'Nenhum cadastro foi excluido.')
     else:
-        messagebox.showinfo('Confirmação', 'Nenhum cadastro foi excluido.')
-
+        messagebox.showerror('Erro', 'Nenhum usuário encontrado!')
 
 def visualizar_informacoes():
     '''visualiza todas as contas'''
@@ -301,36 +313,51 @@ def visualizar_informacoes():
     FROM informacoesDOusuario
     """)
     info = cursor.fetchall()
-    nova = tk.Toplevel(janela)
-    nova.title("Todos os sites")
-    nova.geometry("300x200")
-    for informacao in info:
-        dicionario['Id'] = informacao[0]
-        dicionario['usuario'] = informacao[1]
-        dicionario['Email'] = informacao[2]
-        dicionario['Senha'] = informacao[3]
-        lista.append(dicionario.copy())
-    visualizar_tudo = tk.Label(nova, text=lista)
-    visualizar_tudo.grid(row=3, column=1, padx=5, pady=5)
+    if info != []:
+        nova = tk.Toplevel(janela)
+        nova.title("Todos os sites")
+        nova.geometry("300x200")
+        for informacao in info:
+            dicionario['Id'] = informacao[0]
+            dicionario['usuario'] = informacao[1]
+            dicionario['Email'] = informacao[2]
+            dicionario['Senha'] = informacao[3]
+            lista.append(dicionario.copy())
+        visualizar_tudo = tk.Label(nova, text=lista)
+        visualizar_tudo.grid(row=3, column=1, padx=5, pady=5)
+    else:
+        messagebox.showerror('Erro', 'Nenhum cadastro realizado!')
 
 def trocar_senha():
     '''Para realizar a troca, é necessário primeiro confirmar o nome de usuário,
     logo depois, inserir a nova senha e confirma-lá, antes de REALIZAR A TROCA.'''
+        
+    conexao = sqlite3.connect("SQL.db")
+    cursor = conexao.cursor()
     try:
-        caso = tk.messagebox.askyesno('Confirmação', 'Deseja realizar a alteração?')
-        if caso == True:
-            conexao = sqlite3.connect("SQL.db")
-            cursor = conexao.cursor()
-            cursor.execute("""
-            UPDATE informacoesDOusuario
-            SET senha = ?
-            WHERE usuario = ?
-            """, [senha, nome])
-            conexao.commit()
+        cursor.execute("""
+        SELECT *
+        FROM informacoesDOusuario
+        WHERE usuario = ?
+        """, [nome])
+        resultado = cursor.fetchall()
+        if resultado != []:
+            caso = tk.messagebox.askyesno('Confirmação', 'Deseja realizar a alteração?')
+            if caso == True:
+                cursor.execute("""
+                UPDATE informacoesDOusuario
+                SET senha = ?
+                WHERE usuario = ?
+                """, [senha, nome])
+                conexao.commit()
+                tk.messagebox.showinfo("Aviso", "Atualização feita com sucesso!")
+            else:
+                tk.messagebox.showinfo("Aviso", "Nenhum dado foi alterado.")
         else:
-            print("Nenhum cadastro foi alterado!")
-    except:
-        print("Confirme primeiro o nome do usuário, logo após, confirme também a nova senha.")
+            tk.messagebox.showerror("Erro", "Nenhum usuário encontrado!")
+    except NameError:
+        tk.messagebox.showerror("Erro", "Digite algo válido!")
+
 
 
 def confirmar_senha():
@@ -356,36 +383,45 @@ def confirmar_novo_email():
 
 def alterar_email():
     try:
-        caso = tk.messagebox.askyesno('Confirmação', 'Deseja realizar a alteração?')
-        if caso == True:
             conexao = sqlite3.connect("SQL.db")
             cursor = conexao.cursor()
             cursor.execute("""
             SELECT *
             FROM informacoesDOusuario
-            WHERE email = ?
-            """, [novo_email])
-            resultado = cursor.fetchall()
-            if resultado == []:
-                conexao = sqlite3.connect("SQL.db")
-                cursor = conexao.cursor()
+            WHERE usuario = ?
+            """, [nome_email])
+            resultado2 = cursor.fetchall()
+            if resultado2 != []:
                 cursor.execute("""
-                UPDATE informacoesDOusuario
-                SET email = ?
-                WHERE usuario = ?
-                """, [novo_email, nome_email])     
-                conexao.commit()
-                messagebox.showinfo('Aviso', 'Troca de E-mail efetuado com sucesso!')
+                SELECT *
+                FROM informacoesDOusuario
+                WHERE email = ?
+                """, [novo_email])
+                resultado = cursor.fetchall()
+                if resultado == []:
+                    caso = tk.messagebox.askyesno('Confirmação', 'Deseja realizar a alteração?')
+                    if caso == True:
+                        conexao = sqlite3.connect("SQL.db")
+                        cursor = conexao.cursor()
+                        cursor.execute("""
+                        UPDATE informacoesDOusuario
+                        SET email = ?
+                        WHERE usuario = ?
+                        """, [novo_email, nome_email])     
+                        conexao.commit()
+                        messagebox.showinfo('Aviso', 'Troca de E-mail efetuado com sucesso!')
+                    else:
+                        tk.messagebox.showinfo("Aviso", "Nenhum dado foi alterado.")
+                else:
+                    tk.messagebox.showerror("Erro", "E-mail já cadastrado!")
             else:
-                tk.messagebox.showerror("Erro", "E-mail já cadastrado!")
-        else:
-            print("Nenhuma alteração foi realizada!")
-    except:
-        print("Confirme primeiro o nome do usuário, logo após, confirme também a nova senha.")
+                tk.messagebox.showerror("Erro", "E-mail não encontrado!!")
+    except NameError:
+        tk.messagebox.showerror("Erro", "Digite algo válido!")
 
 inicio = tk.Button(janela, text= 'Confirmar', command=declaracao).grid(row=2, column=2, padx=5, pady=5)
 copiarsenha = tk.Button(janela, text= 'Copiar senha', command=copiar_senha).grid(row=2, column=3, padx=5, pady=5)
-senha_aleatoria = tk.Button(janela, text= 'Gerar senha', command=gerar_senha).grid(row=2, column=4)
+senha_aleatoria = tk.Button(janela, text= 'Gerar senha', command=gerar_senha).grid(row=2, column=4, padx=5, pady=5)
 procurar_usuari0 = tk.Button(janela, text= 'Procurar', command=procurar_usuario).grid(row=3, column=2, padx=5, pady=5) 
 excluir = tk.Button(janela, text= 'Excluir', command=excluir_conta).grid(row=4, column=2, padx=5, pady=5) 
 visualizar = tk.Button(janela, text= 'Conferir', command=visualizar_informacoes).grid(row=9, column=1, padx=5, pady=5) 
