@@ -361,12 +361,23 @@ def alterar_email():
             conexao = sqlite3.connect("SQL.db")
             cursor = conexao.cursor()
             cursor.execute("""
-            UPDATE informacoesDOusuario
-            SET email = ?
-            WHERE usuario = ?
-            """, [novo_email, nome_email])
-            
-            conexao.commit()
+            SELECT *
+            FROM informacoesDOusuario
+            WHERE email = ?
+            """, [novo_email])
+            resultado = cursor.fetchall()
+            if resultado == []:
+                conexao = sqlite3.connect("SQL.db")
+                cursor = conexao.cursor()
+                cursor.execute("""
+                UPDATE informacoesDOusuario
+                SET email = ?
+                WHERE usuario = ?
+                """, [novo_email, nome_email])     
+                conexao.commit()
+                messagebox.showinfo('Aviso', 'Troca de E-mail efetuado com sucesso!')
+            else:
+                tk.messagebox.showerror("Erro", "E-mail já cadastrado!")
         else:
             print("Nenhuma alteração foi realizada!")
     except:
