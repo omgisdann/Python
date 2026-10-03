@@ -11,7 +11,9 @@ class Conversor:
         self.mensagem_inicial = tk.Label(self.janela, text="BEM VINDO AO CONVERSOR DE MOEDAS!").place(x=180, y=10)
         self.mensagem_origem = tk.Label(self.janela, text="Moeda Origem:").place(x=10, y=70) #o y faz descer o x faz ir pro lado
         self.caixa_origem = ttk.Combobox(self.janela, values=("BRL", "USD")).place(x=8, y=95)
-        self.mensagem_destino = tk.Label(self.janela, text="Moeda Destino:").place(x=30, y=70)
+        self.mensagem_destino = tk.Label(self.janela, text="Moeda Destino:").place(x=200, y=70)
+        self.caixa_destino = ttk.Combobox(self.janela, values=("BRL", "USD")).place(x=200, y=95)
+        self.botao_converter = ttk.Button(self.janela, text= 'Converter').place(x=370, y=94)
         self.janela.mainloop()
 
 
