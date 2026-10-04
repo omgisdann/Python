@@ -36,18 +36,20 @@ class Tarefa():
 
     def adicionando_tarefa(self):
         registrador = 0
+        global aviso_add
         if Tarefa.tarefas_salvas != []:
             for lista in Tarefa.tarefas_salvas:
                 if lista == self.caixa_addtrf.get():
-                    aviso_add = tk.Label(self.janela, text='Tarefa já registrada').place(x=175, y=65)
+                    aviso_add.config(text='Tarefa já registrada')
                     registrador = 1
                     break
             if registrador == 0:
                 Tarefa.tarefas_salvas.append(self.caixa_addtrf.get())
-                aviso_add = tk.Label(self.janela, text='Tarefa nova registrada').place(x=175, y=65)
+                aviso_add.config(text='Tarefa nova registrada')
         else:
             Tarefa.tarefas_salvas.append(self.caixa_addtrf.get())
-            aviso_add = tk.Label(self.janela, text='Tarefa nova registrada').place(x=240, y=65)
+            aviso_add = tk.Label(self.janela, text='Tarefa nova registrada')
+            aviso_add.place(x=240, y=65)
 
 
 
@@ -56,6 +58,7 @@ class Tarefa():
         for nome_individual in Tarefa.tarefas_salvas:
             if nome_individual == self.caixa_rmtrf.get():
                 Tarefa.tarefas_salvas.remove(nome_individual)
+                aviso_add = tk.Label(self.janela, text='Tarefa removida!').place(x=240, y=119)
                 break
         else:
             aviso_add = tk.Label(self.janela, text='A tarefa não foi encontrada!').place(x=240, y=119)
