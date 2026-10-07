@@ -1,5 +1,5 @@
 import tkinter as tk
-
+import random
 
 class Tarefa():
     tarefas_salvas = []
@@ -31,6 +31,15 @@ class Tarefa():
         ##########################################VISUALIZAR TAREFA#########################################
         self.texto_vsl = tk.Label(self.janela, text='Visualizar Tarefa').place(x=0, y=150)
         self.botao_vsl = tk.Button(self.janela, text= 'Confirmar', command=self.visualizar_tarefas).place(x=5, y=180)
+
+        #########################################RANDOM TO DO ##############################################
+        self.texto_rdm = tk.Label(self.janela, text='Gerar tarefa aleatória').place(x=0, y=210)
+        self.botao_rdm = tk.Button(self.janela, text= 'Gerar Tarefa', command=self.gerar_tarefa_aleatoria).place(x=5, y=237)
+
+
+
+
+
 
         self.janela.mainloop()
 
@@ -68,6 +77,9 @@ class Tarefa():
     def visualizar_tarefas(self):
         print(Tarefa.tarefas_salvas)
 
+    def gerar_tarefa_aleatoria(self):
+        self.tarefa_escolhida = random.choice(self.tarefas_salvas)
+        print(self.tarefa_escolhida)
     
 
 teste = Tarefa()
