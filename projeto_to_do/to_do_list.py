@@ -36,6 +36,9 @@ class Tarefa():
         self.texto_rdm = tk.Label(self.janela, text='Gerar tarefa aleatória').place(x=0, y=210)
         self.botao_rdm = tk.Button(self.janela, text= 'Gerar Tarefa', command=self.gerar_tarefa_aleatoria).place(x=5, y=237)
 
+        #########################################CONTAR OS TO DO'S #########################################
+        self.texto_rdm = tk.Label(self.janela, text='Quantidade de tarefas').place(x=0, y=270)
+        self.botao_rdm = tk.Button(self.janela, text= 'Visualizar', command=self.quantidade_tarefas).place(x=5, y=294)
 
 
 
@@ -96,8 +99,20 @@ class Tarefa():
             tk.Label(nova, text=f"A tarefa escolhida foi: {self.tarefa_escolhida}").pack()
         else:
             self.mensagem = tk.Label(self.janela, text='Não há tarefas!', fg='red').place(x=90, y=240)
-    
+
+
+    def quantidade_tarefas(self):
+        if self.tarefas_salvas != []:
+            quantidade = len(self.tarefas_salvas)
+            self_mensagem = tk.Label(self.janela, text=f'{quantidade} tarefas')
+            self_mensagem.place(x=70, y=295)
+        else:
+            self_mensagem = tk.Label(self.janela, text='Não há tarefas para visualizar!', fg='red')
+            self_mensagem.place(x=70, y=295)
+            self_mensagem.config(self.janela, text='Não há tarefas para visualizar!', fg='red').place(x=70, y=295)
+
+
+
 
 teste = Tarefa()
 teste.adicionando_tarefa()
-teste.remover_tarefa()
