@@ -49,37 +49,53 @@ class Tarefa():
         if Tarefa.tarefas_salvas != []:
             for lista in Tarefa.tarefas_salvas:
                 if lista == self.caixa_addtrf.get():
-                    aviso_add.config(text='Tarefa já registrada')
+                    aviso_add.config(text='Tarefa já registrada!', fg='red')
                     registrador = 1
                     break
             if registrador == 0:
                 Tarefa.tarefas_salvas.append(self.caixa_addtrf.get())
-                aviso_add.config(text='Tarefa nova registrada')
+                aviso_add.config(text='Tarefa nova registrada!', fg='green')
         else:
             Tarefa.tarefas_salvas.append(self.caixa_addtrf.get())
-            aviso_add = tk.Label(self.janela, text='Tarefa nova registrada')
+            aviso_add = tk.Label(self.janela, text='Tarefa nova registrada!', fg='green')
             aviso_add.place(x=240, y=65)
 
 
 
 
     def remover_tarefa(self):
+        '''caso alguma tarefa tenha sido publicada errada, essa função servirá para apagar'''
         for nome_individual in Tarefa.tarefas_salvas:
             if nome_individual == self.caixa_rmtrf.get():
                 Tarefa.tarefas_salvas.remove(nome_individual)
-                aviso_add = tk.Label(self.janela, text='Tarefa removida!').place(x=240, y=119)
+                aviso_add = tk.Label(self.janela, text='Tarefa removida!', fg='green').place(x=240, y=119)
                 break
         else:
-            aviso_add = tk.Label(self.janela, text='A tarefa não foi encontrada!').place(x=240, y=119)
+            aviso_add = tk.Label(self.janela, text='A tarefa não foi encontrada!', fg='red').place(x=240, y=119)
 
                 
         
     def visualizar_tarefas(self):
-        print(Tarefa.tarefas_salvas)
+        if self.tarefas_salvas != []:
+            nova = tk.Toplevel(self.janela)
+            nova.title("Visualizar Tarefas")
+            nova.geometry("1000x500")
+            tk.Label(nova, text=f"Tarefas disponiveis: {self.tarefas_salvas}").place(x=0, y=0)
+        else:
+            tk.Label(self.janela, text=f"Nenhuma tarefa a visualizar!", fg='red').place(x=80, y=180)
+
+           
+            
 
     def gerar_tarefa_aleatoria(self):
-        self.tarefa_escolhida = random.choice(self.tarefas_salvas)
-        print(self.tarefa_escolhida)
+        if self.tarefas_salvas != []:
+            self.tarefa_escolhida = random.choice(self.tarefas_salvas)
+            nova = tk.Toplevel(self.janela)
+            nova.title("Tarefa Aleatória")
+            nova.geometry("300x200")
+            tk.Label(nova, text=f"A tarefa escolhida foi: {self.tarefa_escolhida}").pack()
+        else:
+            self.mensagem = tk.Label(self.janela, text='Não há tarefas!', fg='red').place(x=90, y=240)
     
 
 teste = Tarefa()
