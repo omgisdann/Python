@@ -82,11 +82,11 @@ class Tarefa():
                 
         
     def visualizar_tarefas(self):
-        if self.tarefas_salvas != []:
+        if Tarefa.tarefas_salvas != []:
             nova = tk.Toplevel(self.janela)
             nova.title("Visualizar Tarefas")
             nova.geometry("1000x500")
-            tk.Label(nova, text=f"Tarefas disponiveis: {self.tarefas_salvas}").place(x=0, y=0)
+            tk.Label(nova, text=f"Tarefas disponiveis: {Tarefa.tarefas_salvas}").place(x=0, y=0)
         else:
             tk.Label(self.janela, text=f"Nenhuma tarefa a visualizar!", fg='red').place(x=80, y=180)
 
@@ -94,8 +94,8 @@ class Tarefa():
             
 
     def gerar_tarefa_aleatoria(self):
-        if self.tarefas_salvas != []:
-            self.tarefa_escolhida = random.choice(self.tarefas_salvas)
+        if Tarefa.tarefas_salvas != []:
+            Tarefa.tarefas_salvas = random.choice(Tarefa.tarefas_salvas)
             nova = tk.Toplevel(self.janela)
             nova.title("Tarefa Aleatória")
             nova.geometry("300x200")
@@ -105,8 +105,8 @@ class Tarefa():
 
 
     def quantidade_tarefas(self):
-        if self.tarefas_salvas != []:
-            quantidade = len(self.tarefas_salvas)
+        if Tarefa.tarefas_salvas != []:
+            quantidade = len(Tarefa.tarefas_salvas)
             self_mensagem = tk.Label(self.janela, text=f'{quantidade} tarefas')
             self_mensagem.place(x=70, y=295)
         else:
@@ -119,12 +119,12 @@ class Tarefa():
     def marcar_como_concluida(self):
         resposta = self.caixa_tc.get()
         registrador = 0
-        if self.tarefas_salvas != []:
-            for tarefa in self.tarefas_salvas:
+        if Tarefa.tarefas_salvas != []:
+            for tarefa in Tarefa.tarefas_salvas:
                 if tarefa == resposta:
-                    self.tarefas_salvas.remove(tarefa)
+                    Tarefa.tarefas_salvas.remove(tarefa)
                     try:
-                        self.texto_tc.config(self.janela, text='Tarefa concluída!', fg='green')
+                        self.texto_tc.config(text='Tarefa concluída!', fg='green')
                     except:
                         self.texto_tc = tk.Label(self.janela, text='Tarefa concluída!', fg='green')
                         self.texto_tc.place(x=410, y=330)
@@ -132,16 +132,19 @@ class Tarefa():
                     break
             if registrador == 0:
                 try:
-                    self.texto_tc.config(self.janela, text='Tarefa não encontrada!', fg='red')
+                    self.texto_tc.config(text='Tarefa não encontrada!', fg='red')
                 except:
                     self.texto_tc = tk.Label(self.janela, text='Tarefa não encontrada!', fg='red')
                     self.texto_tc.place(x=410, y=330)
         else:
             try:
-                self.texto_tc.config(self.janela, text='Não há tarefas!', fg='red')
+                self.texto_tc.config(text='Não há tarefas!', fg='red')
             except:
-                self.texto_tc = tk.Label(self.janela, text='Não há tarefas!', fg='red')
-                self.texto_tc.place(x=410, y=330)
+                try:
+                    self.texto_tc.config(text='Não há tarefas!', fg='red')
+                except AttributeError:
+                    self.texto_tc = tk.Label(self.janela, text='Não há tarefas!', fg='red')
+                    self.texto_tc.place(x=410, y=330)
 
 
 
