@@ -7,7 +7,7 @@ class Tarefa():
         self.janela = tk.Tk()
         self.janela.title("To-Do-List")
         self.janela.geometry("1000x500")
-        self.texto_titulo = tk.Label(self.janela, text='TO DO LIST', background="#A5A4EE").place(x=450, y=0) #x movimenta pro lado, Y para baixo
+        self.texto_titulo = tk.Label(self.janela, text='TO DO LIST', foreground="#1B1BB9").place(x=460, y=0) #x movimenta pro lado, Y para baixo
         ####################################################### INICIO #################################
 
 
@@ -24,25 +24,28 @@ class Tarefa():
         self.caixa_rmtrf = tk.Entry(self.janela, width=25)
         self.caixa_rmtrf.place(x=0, y=120)
         self.botao_rmtrf = tk.Button(self.janela, text= 'Confirmar', command=self.remover_tarefa).place(x=160, y=115)
-        ##################################################################################################
+        ####################################################################################################
 
 
 
         ##########################################VISUALIZAR TAREFA#########################################
-        self.texto_vsl = tk.Label(self.janela, text='Visualizar Tarefa').place(x=0, y=150)
-        self.botao_vsl = tk.Button(self.janela, text= 'Confirmar', command=self.visualizar_tarefas).place(x=5, y=180)
+        self.texto_vsl = tk.Label(self.janela, text='Visualizar todas Tarefas').place(x=0, y=155)
+        self.botao_vsl = tk.Button(self.janela, text= 'Visualizar', command=self.visualizar_tarefas).place(x=5, y=180)
 
         #########################################RANDOM TO DO ##############################################
-        self.texto_rdm = tk.Label(self.janela, text='Gerar tarefa aleatória').place(x=0, y=210)
-        self.botao_rdm = tk.Button(self.janela, text= 'Gerar Tarefa', command=self.gerar_tarefa_aleatoria).place(x=5, y=237)
+        self.texto_rdm = tk.Label(self.janela, text='Gerador de tarefa aleatória').place(x=0, y=210)
+        self.botao_rdm = tk.Button(self.janela, text= 'Gerar Tarefa Aleatória', command=self.gerar_tarefa_aleatoria).place(x=5, y=237)
 
         #########################################CONTAR OS TO DO'S #########################################
         self.texto_rdm = tk.Label(self.janela, text='Quantidade de tarefas').place(x=0, y=270)
         self.botao_rdm = tk.Button(self.janela, text= 'Visualizar', command=self.quantidade_tarefas).place(x=5, y=294)
 
+        ##########################################MARCAR COMO CONCLUIDA#####################################
 
-
-
+        self.texto_tc = tk.Label(self.janela, text='Marcar Tarefa como concluida').place(x=0, y=330)
+        self.caixa_tc = tk.Entry(self.janela, width=25)
+        self.caixa_tc.place(x=170, y=330)
+        self.botao_tc = tk.Button(self.janela, text= 'Confirmar', command=self.marcar_como_concluida).place(x=330, y=327)
 
         self.janela.mainloop()
 
@@ -110,6 +113,35 @@ class Tarefa():
             self_mensagem = tk.Label(self.janela, text='Não há tarefas para visualizar!', fg='red')
             self_mensagem.place(x=70, y=295)
             self_mensagem.config(self.janela, text='Não há tarefas para visualizar!', fg='red').place(x=70, y=295)
+
+
+
+    def marcar_como_concluida(self):
+        resposta = self.caixa_tc.get()
+        registrador = 0
+        if self.tarefas_salvas != []:
+            for tarefa in self.tarefas_salvas:
+                if tarefa == resposta:
+                    self.tarefas_salvas.remove(tarefa)
+                    try:
+                        self.texto_tc.config(self.janela, text='Tarefa concluída!', fg='green')
+                    except:
+                        self.texto_tc = tk.Label(self.janela, text='Tarefa concluída!', fg='green')
+                        self.texto_tc.place(x=410, y=330)
+                    registrador +=1
+                    break
+            if registrador == 0:
+                try:
+                    self.texto_tc.config(self.janela, text='Tarefa não encontrada!', fg='red')
+                except:
+                    self.texto_tc = tk.Label(self.janela, text='Tarefa não encontrada!', fg='red')
+                    self.texto_tc.place(x=410, y=330)
+        else:
+            try:
+                self.texto_tc.config(self.janela, text='Não há tarefas!', fg='red')
+            except:
+                self.texto_tc = tk.Label(self.janela, text='Não há tarefas!', fg='red')
+                self.texto_tc.place(x=410, y=330)
 
 
 
