@@ -3,6 +3,7 @@ import random
 
 class Tarefa():
     tarefas_salvas = []
+    tarefas_concluidas = []
     def __init__(self):
         self.janela = tk.Tk()
         self.janela.title("To-Do-List")
@@ -47,6 +48,9 @@ class Tarefa():
         self.caixa_tc.place(x=170, y=330)
         self.botao_tc = tk.Button(self.janela, text= 'Confirmar', command=self.marcar_como_concluida).place(x=330, y=327)
 
+        ##########################################VISUALIZAR TAREFAS CONCLUIDAS#############################
+        self.texto_vtc = tk.Label(self.janela, text='Visualizar Tarefas concluídas').place(x=0, y=360)
+        self.botao_btc = tk.Button(self.janela, text= 'Confirmar', command=self.visualizar_tarefas_concluidas).place(x=0, y=386)
         self.janela.mainloop()
 
     def adicionando_tarefa(self):
@@ -122,6 +126,7 @@ class Tarefa():
         if Tarefa.tarefas_salvas != []:
             for tarefa in Tarefa.tarefas_salvas:
                 if tarefa == resposta:
+                    Tarefa.tarefas_concluidas.append(tarefa)
                     Tarefa.tarefas_salvas.remove(tarefa)
                     try:
                         self.texto_tc.config(text='Tarefa concluída!', fg='green')
@@ -145,6 +150,19 @@ class Tarefa():
                 except AttributeError:
                     self.texto_tc = tk.Label(self.janela, text='Não há tarefas!', fg='red')
                     self.texto_tc.place(x=410, y=330)
+
+
+    def visualizar_tarefas_concluidas(self):
+        nova = tk.Toplevel(self.janela)
+        nova.title("Tarefas concluídas")
+        nova.geometry("300x200")
+        if Tarefa.tarefas_concluidas != []:
+            self.texto_vtc = tk.Label(nova, text=f"Tarefas concluídas: {Tarefa.tarefas_concluidas}")
+            self.texto_vtc.place(x=0, y=0)
+        else:
+            self.texto_vtc = tk.Label(nova, text='Não há tarefas concluídas!').place(x=0, y=0)
+            self.texto_vtc.place(x=0, y=0)
+
 
 
 
