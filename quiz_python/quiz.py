@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+import time
 
 class Perguntas:
     acertos = 0
@@ -120,6 +121,9 @@ class Perguntas:
             Perguntas.acertos+=1
             self.msg.config(text='Você acertou!', foreground="#09A70F", font=("Arial", 8 , "bold"))
             self.msg.place(x=345, y=300)
+            messagebox.showinfo('🎉', f"Você acertou todas as questões, Parabéns!")
+            tempo = time.sleep(10)
+            self.janela.destroy()
         else:
             messagebox.showinfo('Quantidade de acertos', f"Quantidade de acertos:{Perguntas.acertos}")
             self.janela.destroy()
