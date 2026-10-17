@@ -85,10 +85,45 @@ class Perguntas:
             Perguntas.acertos+=1
             self.msg.config(text='Você acertou!', foreground="#09A70F", font=("Arial", 8 , "bold"))
             self.msg.place(x=345, y=300)
+            self.var_opcao5 = tk.StringVar(value="")
+            self.question1.config(text="Maior órgão do corpo humano?")
+            self.botao.config(text= 'Confirmar', command=self.submit5)
+            self.question1.place(x=110, y=0)
+            self.first_q_rbottom.config(text='Fígado',  value='figado',variable=self.var_opcao5)
+            self.second_q_rbottom.config(text='Pele', value='pele', variable=self.var_opcao5)
+            self.third_q_rbottom.config(text='Pulmão', value='pulmao', variable=self.var_opcao5)
+            self.fourth_q_rbottom.config(text='Cérebro', value='cerebro', variable=self.var_opcao5)
         else:
             messagebox.showinfo('Quantidade de acertos', f"Quantidade de acertos:{Perguntas.acertos}")
             self.janela.destroy()
 
+    def submit5(self):
+        if self.var_opcao5.get() == 'pele':
+            Perguntas.acertos+=1
+            self.msg.config(text='Você acertou!', foreground="#09A70F", font=("Arial", 8 , "bold"))
+            self.msg.place(x=345, y=300)
+
+            self.var_opcao6 = tk.StringVar(value="")
+            self.question1.config(text="Qual mamífero pode voar?")
+            self.botao.config(text= 'Confirmar', command=self.submit6)
+            self.question1.place(x=110, y=0)
+            self.first_q_rbottom.config(text='Esquilo',  value='esquilo',variable=self.var_opcao6)
+            self.second_q_rbottom.config(text='Morcego', value='morcego', variable=self.var_opcao6)
+            self.third_q_rbottom.config(text='Pinguim', value='pinguim', variable=self.var_opcao6)
+            self.fourth_q_rbottom.config(text='Avestruz', value='avestruz', variable=self.var_opcao6)
+        else:
+            messagebox.showinfo('Quantidade de acertos', f"Quantidade de acertos:{Perguntas.acertos}")
+            self.janela.destroy()
+
+    def submit6(self):
+        if self.var_opcao6.get() == 'morcego':
+            Perguntas.acertos+=1
+            self.msg.config(text='Você acertou!', foreground="#09A70F", font=("Arial", 8 , "bold"))
+            self.msg.place(x=345, y=300)
+        else:
+            messagebox.showinfo('Quantidade de acertos', f"Quantidade de acertos:{Perguntas.acertos}")
+            self.janela.destroy()
+            
 teste = Perguntas()
 teste.Questao()
 teste.janela.mainloop()
