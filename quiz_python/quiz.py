@@ -49,12 +49,45 @@ class Perguntas:
             Perguntas.acertos+=1
             self.msg.config(text='Você acertou!', foreground="#09A70F", font=("Arial", 8 , "bold"))
             self.msg.place(x=345, y=300)
+            self.var_opcao3 = tk.StringVar(value="")
+            self.question1.config(text="Qual animal tem três corações?")
+            self.botao.config(text= 'Confirmar', command=self.submit3)
+            self.question1.place(x=110, y=0)
+            self.first_q_rbottom.config(text='Polvo',  value='polvo',variable=self.var_opcao3)
+            self.second_q_rbottom.config(text='Golfinho', value='golfinho', variable=self.var_opcao3)
+            self.third_q_rbottom.config(text='Tubarão', value='tubarao', variable=self.var_opcao3)
+            self.fourth_q_rbottom.config(text='Água-Viva', value='agua-viva', variable=self.var_opcao3)
         else:
             messagebox.showinfo('Quantidade de acertos', f"Quantidade de acertos:{Perguntas.acertos}")
             self.janela.destroy()
 
 
+    def submit3(self):
+        if self.var_opcao3.get() == 'polvo':
+            Perguntas.acertos+=1
+            self.msg.config(text='Você acertou!', foreground="#09A70F", font=("Arial", 8 , "bold"))
+            self.msg.place(x=345, y=300)
+            self.var_opcao4 = tk.StringVar(value="")
+            self.question1.config(text="Qual planeta tem o maior dia?")
+            self.botao.config(text= 'Confirmar', command=self.submit4)
+            self.question1.place(x=110, y=0)
+            self.first_q_rbottom.config(text='Marte',  value='marte',variable=self.var_opcao4)
+            self.second_q_rbottom.config(text='Mercúrio', value='mercurio', variable=self.var_opcao4)
+            self.third_q_rbottom.config(text='Júpiter', value='jupiter', variable=self.var_opcao4)
+            self.fourth_q_rbottom.config(text='Vênus', value='venus', variable=self.var_opcao4)
+        else:
+            messagebox.showinfo('Quantidade de acertos', f"Quantidade de acertos:{Perguntas.acertos}")
+            self.janela.destroy()
 
+
+    def submit4(self):
+        if self.var_opcao4.get() == 'venus':
+            Perguntas.acertos+=1
+            self.msg.config(text='Você acertou!', foreground="#09A70F", font=("Arial", 8 , "bold"))
+            self.msg.place(x=345, y=300)
+        else:
+            messagebox.showinfo('Quantidade de acertos', f"Quantidade de acertos:{Perguntas.acertos}")
+            self.janela.destroy()
 
 teste = Perguntas()
 teste.Questao()
