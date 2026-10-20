@@ -28,7 +28,7 @@ class Programa:
 
         self.botao_js = tk.Button(self.frame_corpo, text='Aprender JavaScript')
         self.botao_js.place(x=0, y=65)
-        
+
     def funcionalidade_py(self):
         nova = tk.Toplevel(self.janela)
         nova.title("Aprenda Python")
@@ -71,7 +71,7 @@ class Programa:
 
         mensagem_traducao = tk.Label(nova, background="#FB0202", text='Atenção, caso a página esteja em Inglês, use o traduzir automatico do Google.')
         mensagem_traducao.place(x=0, y=370)
-        
+        print("Olá mundo")
     
     def funcionalidade_java(self):
         nova = tk.Toplevel(self.janela)
