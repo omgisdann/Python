@@ -597,8 +597,6 @@ class Programa:
         mensagem_traducao.place(x=0, y=180)   
 
 
-    print("ola")
-    print('tchau')
 
 
 
