@@ -5,15 +5,14 @@ class Programa:
     def __init__(self):
         self.janela = tk.Tk()
         self.janela.title("LETSTUDYTOGETHER")
-        self.janela.geometry("1000x225")
+        self.janela.geometry("800x225")
 
     def cabecalho(self):
         self.frame_cabecalho = tk.Frame(self.janela)
-        self.frame_cabecalho.place(x=0, y=0, width=1000, height=100)
-        canvas = tk.Canvas(self.frame_cabecalho,width=1000, height=100, bg="powder blue")
+        self.frame_cabecalho.place(x=0, y=0, width=800, height=100)
+        canvas = tk.Canvas(self.frame_cabecalho, width=800, height=100, bg="powder blue")
         canvas.pack()
-        canvas.create_text(500, 50, text="LET STUDY TOGETHER", font=("Arial", 40))
-
+        canvas.create_text(400, 50, text="LET STUDY TOGETHER", font=("Arial", 32))
         
     def corpo(self):
         self.frame_corpo = tk.Frame(self.janela, bg="white")
@@ -561,20 +560,20 @@ class Programa:
         primeiro = tk.Label(nova, text="Canais do Youtube:")
         primeiro.place(x=0, y=0)
 
-        aprenda_Go = tk.Button(nova, background="#4946E2",text="Aprenda Go", command=lambda: webbrowser.open('https://www.youtube.com/@AprendaGo?utm_source=chatgpt.com'))
-        aprenda_Go.place(x=0, y=20)
+        aprenda_rust = tk.Button(nova, foreground="#FFF6F6", background="#000000",text="Aprenda Rust", command=lambda: webbrowser.open('https://www.youtube.com/results?search_query=Bruno+Cesar+Rocha+Aprenda+Rust&utm_source=chatgpt.com'))
+        aprenda_rust.place(x=0, y=20)
 
-        full_cycle = tk.Button(nova, background="#4946E2",text="Full Cycle", command=lambda: webbrowser.open('https://www.youtube.com/@FullCycle?utm_source=chatgpt.com'))
-        full_cycle.place(x=0, y=50)
+        master_dev = tk.Button(nova, foreground="#FFF6F6", background="#000000" ,text="Master Dev", command=lambda: webbrowser.open('https://www.youtube.com/results?search_query=Master+Dev+Aprendendo+Rust+Language+do+ZERO&utm_source=chatgpt.com'))
+        master_dev.place(x=0, y=50)
 
-        link_sc = tk.Button(nova, background="#4946E2",text="Stephani Cardoso", command=lambda: webbrowser.open('https://www.youtube.com/results?search_query=Stephanie+Cardoso+Golang+do+Zero&utm_source=chatgpt.com'))
-        link_sc.place(x=0, y=80)
+        ms_reactor = tk.Button(nova, foreground="#FFF6F6", background="#000000" ,text="Microsoft Reactor", command=lambda: webbrowser.open('https://www.youtube.com/results?search_query=Microsoft+Reactor+Programacao+Basica+em+Rust&utm_source=chatgpt.com'))
+        ms_reactor.place(x=0, y=80)
 
-        link_hun = tk.Button(nova, background="#4946E2",text="Hun Coding", command=lambda: webbrowser.open('https://www.youtube.com/@HunCoding?utm_source=chatgpt.com'))
-        link_hun.place(x=0, y=110)
+        link_as = tk.Button(nova, foreground="#FFF6F6", background="#000000",text="Antonio Souza", command=lambda: webbrowser.open('https://www.youtube.com/watch?v=FCuL3BrVdds&utm_source=chatgpt.com'))
+        link_as.place(x=0, y=110)
 
-        link_nbk = tk.Button(nova, background="#4946E2",text="NBK Mundo Tech", command=lambda: webbrowser.open('https://www.youtube.com/results?search_query=NBK+Mundo+Tech+curso+Golang&utm_source=chatgpt.com'))
-        link_nbk.place(x=0, y=140)
+        link_w3d = tk.Button(nova, foreground="#FFF6F6", background="#000000",text="WEB3DEV", command=lambda: webbrowser.open('https://www.youtube.com/watch?v=7rquZPI5B-k&utm_source=chatgpt.com'))
+        link_w3d.place(x=0, y=140)
 
         segundo = tk.Label(nova, text='Artigos/Sites:')
         segundo.place(x=520, y=0)
@@ -582,23 +581,24 @@ class Programa:
         link_udemy = tk.Button(nova, background="#FFFFFF",text="Udemy", command=lambda: webbrowser.open('https://www.udemy.com/pt/'))
         link_udemy.place(x=550, y=20)
 
-        link_gobr = tk.Button(nova, background="#FFFFFF",text="Go Brasil", command=lambda: webbrowser.open('https://golang.com.br/aprenda/?utm_source=chatgpt.com'))
-        link_gobr.place(x=542, y=50)
+        link_ur = tk.Button(nova, background="#FFFFFF",text="Universo Rust", command=lambda: webbrowser.open('https://universorust.com/?utm_source=chatgpt.com'))
+        link_ur.place(x=516, y=50)
 
-        link_cursogo = tk.Button(nova, background="#FFFFFF",text="Curso GO", command=lambda: webbrowser.open('https://curso.golang.com.br/?utm_source=chatgpt.com'))
-        link_cursogo.place(x=537, y=80)
+        link_rustbrasil = tk.Button(nova, background="#FFFFFF",text="Rust BR", command=lambda: webbrowser.open('https://www.rustlang.com.br/aprenda/?utm_source=chatgpt.com'))
+        link_rustbrasil.place(x=548, y=80)
 
-        youcourse = tk.Button(nova, background="#FFFFFF",text="You Course", command=lambda: webbrowser.open('https://www.youcourse.com.br/topic/go-linguagem-de-programacao?utm_source=chatgpt.com'))
-        youcourse.place(x=527, y=110)
+        tutorial_rust = tk.Button(nova, background="#FFFFFF",text="Tutorial de Rust", command=lambda: webbrowser.open('https://rusttutorial.org/pt-br/?utm_source=chatgpt.com'))
+        tutorial_rust.place(x=505, y=110)
         
-        link_freecodecamp = tk.Button(nova, background="#FFFFFF",text="FreeCodeCamp", command=lambda: webbrowser.open('https://www.freecodecamp.org/'))
-        link_freecodecamp.place(x=506, y=140)
+        dev_community = tk.Button(nova, background="#FFFFFF",text="Dev Community", command=lambda: webbrowser.open('https://dev.to/gabrielteixeira44/entao-voce-quer-aprender-rust-3ak6?utm_source=chatgpt.com'))
+        dev_community.place(x=500, y=140)
 
         mensagem_traducao = tk.Label(nova,foreground="#C80606", text='Atenção, caso a página esteja em Inglês, use o traduzir automatico do Google.')
-        mensagem_traducao.place(x=0, y=180)    
+        mensagem_traducao.place(x=0, y=180)   
 
 
-
+    print("ola")
+    print('tchau')
 
 
 
