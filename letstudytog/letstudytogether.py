@@ -54,6 +54,17 @@ class Programa:
         self.rust = tk.Button(self.frame_corpo, text='Aprender Rust', command=self.funcionalidade_rust)
         self.rust.place(x=400, y=96)
 
+        self.swift = tk.Button(self.frame_corpo, text='Aprender Swift', command=self.funcionalidade_swift)
+        self.swift.place(x=600, y=5)
+
+        self.kotlin = tk.Button(self.frame_corpo, text='Aprender Kotlin', command=self.funcionalidade_kotlin)
+        self.kotlin.place(x=600, y=37)
+
+        self.dotnet = tk.Button(self.frame_corpo, text='Aprender Visual Basic.Net', command=self.funcionalidade_dotnet)
+        self.dotnet.place(x=600, y=67)
+
+        self.ruby =  tk.Button(self.frame_corpo, text='Aprender Ruby', command=self.funcionalidade_ruby)
+        self.ruby.place(x=600, y=96)
     def funcionalidade_py(self):
         nova = tk.Toplevel(self.janela)
         nova.title("Aprenda Python")
@@ -598,28 +609,181 @@ class Programa:
 
 
 
+    def funcionalidade_swift(self):
+        nova = tk.Toplevel(self.janela)
+        nova.title("Aprenda Swift")
+        nova.geometry("600x200")
+        primeiro = tk.Label(nova, text="Canais do Youtube:")
+        primeiro.place(x=0, y=0)
+
+        tiago_aguiar = tk.Button(nova,background="#F05138",text="Tiago Aguiar", command=lambda: webbrowser.open('https://www.youtube.com/results?search_query=Tiago+Aguiar+curso+Swift&utm_source=chatgpt.com'))
+        tiago_aguiar.place(x=0, y=20)
+
+        attekita_dev = tk.Button(nova,background="#F05138" ,text="Attekita Dev", command=lambda: webbrowser.open('https://www.youtube.com/results?search_query=Attekita+Dev+Swift&utm_source=chatgpt.com'))
+        attekita_dev.place(x=0, y=50)
+
+        codemus = tk.Button(nova,background="#F05138" ,text="Codemus", command=lambda: webbrowser.open('https://www.youtube.com/results?search_query=C%C3%ADcero+Camargo+CODEMUS+Swift&utm_source=chatgpt.com'))
+        codemus.place(x=0, y=80)
+
+        cocoaheadsbr = tk.Button(nova,background="#F05138",text="CocoaHeadsBr", command=lambda: webbrowser.open('https://www.youtube.com/results?search_query=CocoaHeads+Brasil+Swift&utm_source=chatgpt.com'))
+        cocoaheadsbr.place(x=0, y=110)
+
+        swift_para_todos = tk.Button(nova,background="#F05138",text="Swift para todos", command=lambda: webbrowser.open('https://www.youtube.com/results?search_query=Swift+para+todos+Swift&utm_source=chatgpt.com'))
+        swift_para_todos.place(x=0, y=140)
+
+        segundo = tk.Label(nova, text='Artigos/Sites:')
+        segundo.place(x=520, y=0)
+
+        link_udemy = tk.Button(nova, background="#FFFFFF",text="Udemy", command=lambda: webbrowser.open('https://www.udemy.com/pt/'))
+        link_udemy.place(x=550, y=20)
+
+        codando_apple = tk.Button(nova, background="#FFFFFF",text="Codando Apple", command=lambda: webbrowser.open('https://github.com/CodandoApple/aprenda-swift?utm_source=chatgpt.com'))
+        codando_apple.place(x=505, y=50)
+
+        dev_paw = tk.Button(nova, background="#FFFFFF",text="Dev Paw", command=lambda: webbrowser.open('https://www.dev-paw.com/pt-br/?utm_source=chatgpt.com'))
+        dev_paw.place(x=543, y=80)
+
+        apple_education = tk.Button(nova, background="#FFFFFF",text="Apple Education", command=lambda: webbrowser.open('https://education.apple.com/learning-center/T021340A-pt_BR?utm_source=chatgpt.com'))
+        apple_education.place(x=500, y=110)
+        
+        mac_magazine = tk.Button(nova, background="#FFFFFF",text="Mac Magazine", command=lambda: webbrowser.open('https://macmagazine.com.br/post/2015/06/24/quaddro-macmagazine-vamos-aprender-swift/?utm_source=chatgpt.com'))
+        mac_magazine.place(x=510, y=140)
+
+        mensagem_traducao = tk.Label(nova,foreground="#C80606", text='Atenção, caso a página esteja em Inglês, use o traduzir automatico do Google.')
+        mensagem_traducao.place(x=0, y=180)   
+
+
+    def funcionalidade_kotlin(self):
+        nova = tk.Toplevel(self.janela)
+        nova.title("Aprenda Kotlin")
+        nova.geometry("600x200")
+        primeiro = tk.Label(nova, text="Canais do Youtube:")
+        primeiro.place(x=0, y=0)
+
+        tiago_aguiar = tk.Button(nova,background="#7F52FF",text="Tiago Aguiar", command=lambda: webbrowser.open('https://www.youtube.com/results?search_query=Tiago+Aguiar+curso+Swift&utm_source=chatgpt.com'))
+        tiago_aguiar.place(x=0, y=20)
+      
+        link_erudio = tk.Button(nova, background="#7F52FF",text="Erudio", command=lambda: webbrowser.open('https://www.youtube.com/c/HashtagTreinamentos/videos'))
+        link_erudio.place(x=0, y=50)
+
+        link_android = tk.Button(nova, background="#7F52FF",text="Android", command=lambda: webbrowser.open('https://www.youtube.com/results?search_query=Android+Simples+e+Direto+Kotlin&utm_source=chatgpt.com'))
+        link_android.place(x=0, y=80)
+
+        link_rapaduradev = tk.Button(nova, background="#7F52FF",text="Rapadura Dev", command=lambda: webbrowser.open('https://www.youtube.com/results?search_query=Rapadura+Dev+Kotlin&utm_source=chatgpt.com'))
+        link_rapaduradev.place(x=0, y=110)
+
+        link_dm = tk.Button(nova, background="#7F52FF",text="Douglas Motta", command=lambda: webbrowser.open('https://www.youtube.com/results?search_query=Douglas+Motta+curso+Kotlin&utm_source=chatgpt.com'))
+        link_dm.place(x=0, y=140)
+
+        segundo = tk.Label(nova, text='Artigos/Sites:')
+        segundo.place(x=520, y=0)
+
+        link_udemy = tk.Button(nova, background="#F05138",text="Udemy", command=lambda: webbrowser.open('https://www.udemy.com/pt/'))
+        link_udemy.place(x=550, y=20)
+
+        kotlin_br = tk.Button(nova, background="#F05138",text="Kotlin BR", command=lambda: webbrowser.open('https://kotlin.dev.br/guias/guia-completo-kotlin/?utm_source=chatgpt.com'))
+        kotlin_br.place(x=540, y=50)
+
+        link_androiddev = tk.Button(nova, background="#F05138",text="Android Dev", command=lambda: webbrowser.open('https://developer.android.com/courses/android-development-with-kotlin/unit-1?hl=pt-BR&utm_source=chatgpt.com'))
+        link_androiddev.place(x=522, y=80)
+
+        link_Coddy = tk.Button(nova, background="#F05138",text="Coddy", command=lambda: webbrowser.open('https://coddy.tech/landing/pt/kotlin?utm_source=chatgpt.com'))
+        link_Coddy.place(x=552, y=110)
+        
+        jetbrainsacademy = tk.Button(nova, background="#F05138",text="JetBrains", command=lambda: webbrowser.open('https://www.jetbrains.com/pt-br/pages/academy/kotlin/?utm_source=chatgpt.com'))
+        jetbrainsacademy.place(x=542, y=140)
+
+        mensagem_traducao = tk.Label(nova,foreground="#C80606", text='Atenção, caso a página esteja em Inglês, use o traduzir automatico do Google.')
+        mensagem_traducao.place(x=0, y=180)
+
+
+    def funcionalidade_dotnet(self):
+        nova = tk.Toplevel(self.janela)
+        nova.title("Aprenda Visual Basic.NET")
+        nova.geometry("600x200")
+        primeiro = tk.Label(nova, text="Canais do Youtube:")
+        primeiro.place(x=0, y=0)
+
+        jc_macoratti = tk.Button(nova, background="#4946E2",text="José Carlos Macoratti", command=lambda: webbrowser.open('https://www.youtube.com/results?search_query=Jos%C3%A9+Carlos+Macoratti+Visual+Basic+NET&utm_source=chatgpt.com'))
+        jc_macoratti.place(x=0, y=20)
+
+        link_marciofessini = tk.Button(nova, background="#4946E2",text="Marcio Fessini", command=lambda: webbrowser.open('https://www.youtube.com/watch?v=yaOlNxorIWA&utm_source=chatgpt.com'))
+        link_marciofessini.place(x=0, y=50)
+
+        otavinomota = tk.Button(nova, background="#4946E2",text="Otavino Mota", command=lambda: webbrowser.open('https://www.youtube.com/watch?v=CMhCNyQsYeg&utm_source=chatgpt.com'))
+        otavinomota.place(x=0, y=80)
+
+        link_dotnet = tk.Button(nova, background="#4946E2",text="Canal .NET", command=lambda: webbrowser.open('https://www.youtube.com/@CanalDotNET?utm_source=chatgpt.com'))
+        link_dotnet.place(x=0, y=110)
+
+        link_boson = tk.Button(nova, background="#4946E2",text="Boson Treinamentos", command=lambda: webbrowser.open('https://www.youtube.com/@bosontreinamentos'))
+        link_boson.place(x=0, y=140)
+
+        segundo = tk.Label(nova, text='Artigos/Sites:')
+        segundo.place(x=520, y=0)
+
+        link_udemy = tk.Button(nova, background="#FFFFFF",text="Udemy", command=lambda: webbrowser.open('https://www.udemy.com/pt/'))
+        link_udemy.place(x=550, y=20)
+
+        link_mslearn = tk.Button(nova, background="#FFFFFF",text="Ms Learn", command=lambda: webbrowser.open('https://learn.microsoft.com/pt-br/dotnet/visual-basic/?utm_source=chatgpt.com'))
+        link_mslearn.place(x=540, y=50)
+
+        link_juliobattisti = tk.Button(nova, background="#FFFFFF",text="Julio Battisti", command=lambda: webbrowser.open('https://juliobattisti.com.br/tutoriais/lista-categorias.asp?utm_source=chatgpt.com'))
+        link_juliobattisti.place(x=525, y=80)
+    
+        link_ttpoint = tk.Button(nova, background="#FFFFFF", text="Tutorials Point", command=lambda: webbrowser.open('https://www.tutorialspoint.com/vb.net/index.htm?utm_source=chatgpt.com'))
+        link_ttpoint.place(x=511, y=110)
+        
+        link_exercism = tk.Button(nova, background="#FFFFFF",text="Exercism", command=lambda: webbrowser.open('https://exercism.org/pt-BR'))
+        link_exercism.place(x=542, y=140)
+
+        mensagem_traducao = tk.Label(nova,foreground="#C80606", text='Atenção, caso a página esteja em Inglês, use o traduzir automatico do Google.')
+        mensagem_traducao.place(x=0, y=180)
 
 
 
+    def funcionalidade_ruby(self):
+        nova = tk.Toplevel(self.janela)
+        nova.title("Aprenda Ruby")
+        nova.geometry("600x200")
+        primeiro = tk.Label(nova, text="Canais do Youtube:")
+        primeiro.place(x=0, y=0)
 
+        puts_dev = tk.Button(nova,background="#FF0000",text="Puts Dev", command=lambda: webbrowser.open('https://www.youtube.com/results?search_query=Puts+Dev+Ruby&utm_source=chatgpt.com'))
+        puts_dev.place(x=0, y=20)
 
+        onebitcode = tk.Button(nova,background="#FF0000" ,text="OneBitCode", command=lambda: webbrowser.open('https://www.youtube.com/results?search_query=OneBitCode+curso+Ruby&utm_source=chatgpt.com'))
+        onebitcode.place(x=0, y=50)
 
+        lucas_caton = tk.Button(nova,background="#FF0000" ,text="Lucas Caton", command=lambda: webbrowser.open('https://www.youtube.com/results?search_query=Lucas+Caton+Ruby+on+Rails&utm_source=chatgpt.com'))
+        lucas_caton.place(x=0, y=80)
 
+        noobcode = tk.Button(nova,background="#FF0000",text="NoobCode", command=lambda: webbrowser.open('https://www.youcourse.com.br/course/curso-de-ruby-para-iniciantes?utm_source=chatgpt.com'))
+        noobcode.place(x=0, y=110)
 
+        link_boson = tk.Button(nova, background="#FF0000",text="Boson Treinamentos", command=lambda: webbrowser.open('https://www.youtube.com/@bosontreinamentos'))
+        link_boson.place(x=0, y=140)
 
+        segundo = tk.Label(nova, text='Artigos/Sites:')
+        segundo.place(x=520, y=0)
 
+        link_udemy = tk.Button(nova, background="#FFFFFF",text="Udemy", command=lambda: webbrowser.open('https://www.udemy.com/pt/'))
+        link_udemy.place(x=550, y=20)
 
+        ruby_docoficial = tk.Button(nova, background="#FFFFFF",text="Ruby Doc Oficial", command=lambda: webbrowser.open('https://www.ruby-lang.org/pt/documentation/?utm_source=chatgpt.com'))
+        ruby_docoficial.place(x=500, y=50)
 
+        rubyemvintemin = tk.Button(nova, background="#FFFFFF",text="Ruby em vinte minutos", command=lambda: webbrowser.open('https://www.ruby-lang.org/pt/documentation/quickstart/?utm_source=chatgpt.com'))
+        rubyemvintemin.place(x=465, y=80)
 
+        rubyonrailsbr = tk.Button(nova, background="#FFFFFF",text="Ruby On Rails BR", command=lambda: webbrowser.open('https://rubyonrailsbrasil.com.br/iniciantes/?utm_source=chatgpt.com'))
+        rubyonrailsbr.place(x=498, y=110)
+        
+        oguia = tk.Button(nova, background="#FFFFFF",text="O guia de Ruby", command=lambda: webbrowser.open('https://why.carlosbrando.com/?utm_source=chatgpt.com'))
+        oguia.place(x=507, y=140)
 
-
-
-
-
-
-
-
-
+        mensagem_traducao = tk.Label(nova,foreground="#C80606", text='Atenção, caso a página esteja em Inglês, use o traduzir automatico do Google.')
+        mensagem_traducao.place(x=0, y=180) 
 
 
 teste = Programa()
