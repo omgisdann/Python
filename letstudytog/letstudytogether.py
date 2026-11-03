@@ -10,7 +10,7 @@ class Programa:
     def cabecalho(self):
         self.frame_cabecalho = tk.Frame(self.janela)
         self.frame_cabecalho.place(x=0, y=0, width=800, height=100)
-        canvas = tk.Canvas(self.frame_cabecalho, width=800, height=100, bg="powder blue")
+        canvas = tk.Canvas(self.frame_cabecalho, width=800, height=100, bg="lawn green")
         canvas.pack()
         canvas.create_text(400, 50, text="LET STUDY TOGETHER", font=("Arial", 32))
         
