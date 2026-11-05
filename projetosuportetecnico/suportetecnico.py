@@ -11,7 +11,7 @@ class Cadastro_de_chamados:
 
 
         self.frame = tk.Frame(self.janela, width=400, height=300, bg="white")
-        self.frame.place(x=195, y=286)
+        self.frame.place(x=140, y=180)
 
         self.canvas = tk.Canvas(self.frame,width=400,height=30,bg="#174B78",highlightthickness=0)
         self.canvas.place(x=0, y=0)
@@ -49,9 +49,17 @@ class Cadastro_de_chamados:
         self.botao_cadastrar = tk.Button(self.frame, text="Cadastrar Chamado", background="#56CFEB", command=self.informacoes)
         self.botao_cadastrar.place(x=100, y=250)
 
-        self.botao_limpar = tk.Button(self.frame, text="Limpar", background="#CD4444")
+        self.botao_limpar = tk.Button(self.frame, text="Limpar", background="#CD4444", command=self.apagar)
         self.botao_limpar.place(x=230, y=250)   
 
+        self.cabecalho = tk.Frame(self.janela, width=1200, height=130, bg="#174B78")
+        self.cabecalho.place(x=0, y=0)
+
+        self.titulo = tk.Label(self.cabecalho, text="Help!", font=("Arial", 30, "bold"), fg="white", bg="#174B78")
+        self.titulo.place(x=50, y=20)
+
+        self.subtitulo = tk.Label(self.cabecalho, text="Suporte Técnico | Sistema de Gerenciamento de Chamados", font=("Arial", 12), fg="white", bg="#174B78")
+        self.subtitulo.place(x=52, y=75)
 
     def informacoes(self):
         nome = self.entrada_nome.get()
@@ -59,11 +67,64 @@ class Cadastro_de_chamados:
         categoria = self.entrada_categoria.get()
         prioridade = self.prioridade_teste.get()
         descricao = self.entrada_descricao.get("1.0", "end-1c")
-        #INSERIR ESSAS INFORMAÇÕES EM UM BANCO DE DADOS SQL
+        
+        try:
+            conexao = sqlite3.connect("sistemasp.db")
+            cursor = conexao.cursor()
+            cursor.execute("""
+                            CREATE TABLE chamados(
+                            nome TEXT,
+                            departamento TEXT,
+                            categoria TEXT,
+                            prioridade INTEGER,
+                            descricao TEXT
+                            )
+                            """)
+
+            
+            cursor.execute("""
+                            INSERT INTO chamados(nome, departamento, categoria, prioridade, descricao)
+                            VALUES(?,?,?,?,?)
+                            """, (nome, 
+                                  departamento, 
+                                  categoria, 
+                                  prioridade, 
+                                  descricao))
+            conexao.commit()
+
+            
+            cursor.execute( """
+                            SELECT *
+                            FROM chamados
+                            """)
+
+        except sqlite3.OperationalError:
+            cursor.execute("""
+                           INSERT INTO chamados(nome, departamento, categoria, prioridade, descricao)
+                           VALUES(?,?,?,?,?)
+                           """, (nome, 
+                                departamento, 
+                                categoria, 
+                                prioridade, 
+                                descricao))
+            conexao.commit()
+         
+                     
+            cursor.execute("""
+                           SELECT *
+                           FROM chamados
+                           """)
+
+    def apagar(self):
+        self.entrada_nome.delete(0, tk.END)
+        self.entrada_departamento.set("")
+        self.entrada_categoria.set("")
+        self.prioridade_teste.set(False)
+        self.entrada_descricao.delete("1.0", tk.END)
+
 
         
-    
+
 
 teste = Cadastro_de_chamados()
 teste.janela.mainloop()
-teste.informacoes()
