@@ -13,7 +13,7 @@ class Cadastro_de_chamados:
 
         # NOVO CHAMADO
         self.frame = tk.Frame(self.janela, width=400, height=300, bg="white")
-        self.frame.place(x=140, y=180)
+        self.frame.place(x=200, y=180)
 
         self.canvas = tk.Canvas(self.frame, width=400, height=30, bg="#174B78", highlightthickness=0)
         self.canvas.place(x=0, y=0)
@@ -63,17 +63,17 @@ class Cadastro_de_chamados:
 
         # VISUALIZAÇÃO E PESQUISA DE DADOS
         self.frame_chamados = tk.Frame(self.janela, width=400, height=300, bg="white")
-        self.frame_chamados.place(x=600, y=180)
+        self.frame_chamados.place(x=660, y=180)
 
         self.canvas_chamados = tk.Canvas(self.frame_chamados, width=400, height=30, bg="#174B78", highlightthickness=0)
         self.canvas_chamados.place(x=0, y=0)
         self.canvas_chamados.create_text(200, 15, text="Pesquisar Chamados Recentes", fill="white", font=("Arial", 11, "bold"), anchor="center")
 
-        self.nome_solicitante_chamados = tk.Label(self.frame_chamados, background="#FFFFFF", text="Nome Completo do Solicitante:")
-        self.nome_solicitante_chamados.place(x=0, y=40)
+        self.id_chamado = tk.Label(self.frame_chamados, background="#FFFFFF", text="ID do Chamado:")
+        self.id_chamado.place(x=0, y=40)
 
-        self.entrada_nome_chamados = tk.Entry(self.frame_chamados, width=17)
-        self.entrada_nome_chamados.place(x=180, y=40)
+        self.entrada_id_chamado = tk.Entry(self.frame_chamados, width=17)
+        self.entrada_id_chamado.place(x=180, y=40)
 
         self.botao_pesquisar = tk.Button(self.frame_chamados, text="Pesquisar", background="#FFFFFF", foreground="#050404", width=10, command=self.realizar_pesquisa)
         self.botao_pesquisar.place(x=295, y=40)
@@ -90,6 +90,14 @@ class Cadastro_de_chamados:
 
         self.data_hora = tk.Label(self.rodape, text="", font=("Arial", 9), fg="white", bg="#174B78")
         self.data_hora.place(x=500, y=12)
+
+        # BARRA LATERAL
+        self.barra_lateral = tk.Frame(self.janela, width=150, height=528, bg="#174B78")
+        self.barra_lateral.place(x=0, y=130)
+
+        self.botao_novo_chamado = tk.Button(self.barra_lateral, text='Criar Chamado', bg="#174B78", fg="#FFFFFF", width=20, relief="flat", bd=0, activebackground="#174B78", activeforeground="white", highlightthickness=0, font=("Arial", 9, "bold"), command=self.acessar_novo_chamado)
+        self.botao_novo_chamado.place(x=0, y=15)
+
 
         try:
             conexao = sqlite3.connect("sistemasp.db")
@@ -122,6 +130,7 @@ class Cadastro_de_chamados:
 
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS chamados(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
                 nome TEXT,
                 departamento TEXT,
                 categoria TEXT,
@@ -154,7 +163,7 @@ class Cadastro_de_chamados:
         self.entrada_descricao.delete("1.0", tk.END)
 
     def realizar_pesquisa(self):
-        nome_a_procurar = self.entrada_nome_chamados.get()
+        id_a_procurar = self.entrada_id_chamado.get()
 
         conexao = sqlite3.connect("sistemasp.db")
         cursor = conexao.cursor()
@@ -162,107 +171,91 @@ class Cadastro_de_chamados:
         cursor.execute("""
             SELECT *
             FROM chamados
-            WHERE nome = ?
-        """, [nome_a_procurar])
+            WHERE id = ?
+        """, [id_a_procurar])
 
         dados = cursor.fetchall()
+        conexao.close()
 
         if not dados:
             print("Nenhum chamado encontrado!")
 
-            self.aviso = tk.Label(self.frame_chamados, background="#FF0707", text="Usuário Não Encontrado!")
+            if hasattr(self, "aviso"):
+                self.aviso.destroy()
+
+            self.aviso = tk.Label(self.frame_chamados, background="#FF0707", text="Chamado Não Encontrado!")
             self.aviso.place(x=125, y=120)
 
         else:
             for dado in dados:
-                nome = dado[0]
-                departamento = dado[1]
-                categoria = dado[2]
-                prioridade = dado[3]
-                observacao = dado[4]
+                id_chamado = dado[0]
+                nome = dado[1]
+                departamento = dado[2]
+                categoria = dado[3]
+                prioridade = dado[4]
+                observacao = dado[5]
 
-            try:
+            if hasattr(self, "aviso"):
                 self.aviso.destroy()
                 del self.aviso
 
-                self.entrada_nome_chamados.destroy()
-                self.botao_pesquisar.destroy()
+            self.id_chamado.destroy()
+            self.entrada_id_chamado.destroy()
+            self.botao_pesquisar.destroy()
 
-                self.nome = tk.Label(self.frame_chamados, background="#66DB68", text=nome)
-                self.nome.place(x=200, y=40)
+            # ID DO CHAMADO
+            self.id_label = tk.Label(self.frame_chamados, background="#FFFFFF", text="ID:")
+            self.id_label.place(x=0, y=40)
 
-                self.departamento_entrada = tk.Label(self.frame_chamados, background="#FFFFFF", text="Departamento:")
-                self.departamento_entrada.place(x=0, y=65)
+            self.id_resultado = tk.Label(self.frame_chamados, background="#66DB68", text=id_chamado)
+            self.id_resultado.place(x=200, y=40)
 
-                self.departamento_resposta = tk.Label(self.frame_chamados, background="#66DB68", text=departamento)
-                self.departamento_resposta.place(x=200, y=65)
+            # NOME DO SOLICITANTE
+            self.nome_label = tk.Label(self.frame_chamados, background="#FFFFFF", text="Nome Completo do Solicitante:")
+            self.nome_label.place(x=0, y=65)
 
-                self.categoria_Entrada = tk.Label(self.frame_chamados, background="#FFFFFF", text="Categoria:")
-                self.categoria_Entrada.place(x=0, y=90)
+            self.nome = tk.Label(self.frame_chamados, background="#66DB68", text=nome)
+            self.nome.place(x=200, y=65)
 
-                self.categoria_Resposta = tk.Label(self.frame_chamados, background="#66DB68", text=categoria)
-                self.categoria_Resposta.place(x=200, y=90)
+            # DEPARTAMENTO
+            self.departamento_entrada = tk.Label(self.frame_chamados, background="#FFFFFF", text="Departamento:")
+            self.departamento_entrada.place(x=0, y=90)
 
-                self.prioridade_entrada = tk.Label(self.frame_chamados, background="#FFFFFF", text="Prioridade:")
-                self.prioridade_entrada.place(x=0, y=115)
+            self.departamento_resposta = tk.Label(self.frame_chamados, background="#66DB68", text=departamento)
+            self.departamento_resposta.place(x=200, y=90)
 
-                if prioridade == 1:
-                    self.prioridade_Resposta = tk.Label(self.frame_chamados, background="#66DB68", text="Alta")
-                else:
-                    self.prioridade_Resposta = tk.Label(self.frame_chamados, background="#66DB68", text="Baixa")
+            # CATEGORIA
+            self.categoria_Entrada = tk.Label(self.frame_chamados, background="#FFFFFF", text="Categoria:")
+            self.categoria_Entrada.place(x=0, y=115)
 
-                self.prioridade_Resposta.place(x=200, y=115)
+            self.categoria_Resposta = tk.Label(self.frame_chamados, background="#66DB68", text=categoria)
+            self.categoria_Resposta.place(x=200, y=115)
 
-                self.observacao_entrada = tk.Label(self.frame_chamados, background="#FFFFFF", text="Observação:")
-                self.observacao_entrada.place(x=0, y=140)
+            # PRIORIDADE
+            self.prioridade_entrada = tk.Label(self.frame_chamados, background="#FFFFFF", text="Prioridade:")
+            self.prioridade_entrada.place(x=0, y=140)
 
-                self.observacao_resposta = tk.Label(self.frame_chamados, background="#FFFFFF", text=observacao, wraplength=380, justify="left", anchor="nw")
-                self.observacao_resposta.place(x=0, y=165, width=390)
+            if prioridade == 1:
+                self.prioridade_Resposta = tk.Label(self.frame_chamados, background="#66DB68", text="Alta")
+            else:
+                self.prioridade_Resposta = tk.Label(self.frame_chamados, background="#66DB68", text="Baixa")
 
-                self.botao_nova_pesquisa = tk.Button(self.frame_chamados, text="Pesquisar outro usuário", background="#56CFEB", command=self.nova_pesquisa)
-                self.botao_nova_pesquisa.place(x=120, y=265)
+            self.prioridade_Resposta.place(x=200, y=140)
 
-            except AttributeError:
-                self.entrada_nome_chamados.destroy()
-                self.botao_pesquisar.destroy()
+            # OBSERVAÇÃO
+            self.observacao_entrada = tk.Label(self.frame_chamados, background="#FFFFFF", text="Observação:")
+            self.observacao_entrada.place(x=0, y=165)
 
-                self.nome = tk.Label(self.frame_chamados, background="#66DB68", text=nome)
-                self.nome.place(x=200, y=40)
+            self.observacao_resposta = tk.Label(self.frame_chamados, background="#FFFFFF", text=observacao, wraplength=380, justify="left", anchor="nw")
+            self.observacao_resposta.place(x=0, y=190, width=390)
 
-                self.departamento_entrada = tk.Label(self.frame_chamados, background="#FFFFFF", text="Departamento:")
-                self.departamento_entrada.place(x=0, y=65)
-
-                self.departamento_resposta = tk.Label(self.frame_chamados, background="#66DB68", text=departamento)
-                self.departamento_resposta.place(x=200, y=65)
-
-                self.categoria_Entrada = tk.Label(self.frame_chamados, background="#FFFFFF", text="Categoria:")
-                self.categoria_Entrada.place(x=0, y=90)
-
-                self.categoria_Resposta = tk.Label(self.frame_chamados, background="#66DB68", text=categoria)
-                self.categoria_Resposta.place(x=200, y=90)
-
-                self.prioridade_entrada = tk.Label(self.frame_chamados, background="#FFFFFF", text="Prioridade:")
-                self.prioridade_entrada.place(x=0, y=115)
-
-                if prioridade == 1:
-                    self.prioridade_Resposta = tk.Label(self.frame_chamados, background="#66DB68", text="Alta")
-                else:
-                    self.prioridade_Resposta = tk.Label(self.frame_chamados, background="#66DB68", text="Baixa")
-
-                self.prioridade_Resposta.place(x=200, y=115)
-
-                self.observacao_entrada = tk.Label(self.frame_chamados, background="#FFFFFF", text="Observação:")
-                self.observacao_entrada.place(x=0, y=140)
-
-                self.observacao_resposta = tk.Label(self.frame_chamados, background="#FFFFFF", text=observacao, wraplength=380, justify="left", anchor="nw")
-                self.observacao_resposta.place(x=0, y=165, width=390)
-
-                self.botao_nova_pesquisa = tk.Button(self.frame_chamados, text="Pesquisar outro usuário", background="#56CFEB", command=self.nova_pesquisa)
-                self.botao_nova_pesquisa.place(x=120, y=265)
-
-        conexao.close()
+            self.botao_nova_pesquisa = tk.Button(self.frame_chamados, text="Pesquisar outro chamado", background="#56CFEB", command=self.nova_pesquisa)
+            self.botao_nova_pesquisa.place(x=120, y=265)
 
     def nova_pesquisa(self):
+        self.id_label.destroy()
+        self.id_resultado.destroy()
+        self.nome_label.destroy()
         self.nome.destroy()
         self.departamento_entrada.destroy()
         self.departamento_resposta.destroy()
@@ -272,17 +265,22 @@ class Cadastro_de_chamados:
         self.prioridade_Resposta.destroy()
         self.observacao_entrada.destroy()
         self.observacao_resposta.destroy()
-
         self.botao_nova_pesquisa.destroy()
 
-        self.entrada_nome_chamados = tk.Entry(self.frame_chamados, width=17)
-        self.entrada_nome_chamados.place(x=180, y=40)
+        self.id_chamado = tk.Label(self.frame_chamados, background="#FFFFFF", text="ID do Chamado:")
+        self.id_chamado.place(x=0, y=40)
+
+        self.entrada_id_chamado = tk.Entry(self.frame_chamados, width=17)
+        self.entrada_id_chamado.place(x=180, y=40)
 
         self.botao_pesquisar = tk.Button(self.frame_chamados, text="Pesquisar", background="#FFFFFF", foreground="#050404", width=10, command=self.realizar_pesquisa)
         self.botao_pesquisar.place(x=295, y=40)
 
-        self.entrada_nome_chamados.focus()
-
+        self.entrada_id_chamado.focus()
+            
+    def acessar_novo_chamado(self):
+        self.frame.lift()
+        self.entrada_nome.focus_set()
 
 teste = Cadastro_de_chamados()
 teste.janela.mainloop()
