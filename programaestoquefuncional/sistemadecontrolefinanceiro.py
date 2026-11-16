@@ -83,7 +83,6 @@ while True:
         movimentacao = Movimentacao(descricao, categoria, valor, tipo, data)
         try:
             cursor = conexao.cursor()
-
             cursor.execute("""                
                                     INSERT INTO movimentacoes(descricao, categoria, valor, tipo, data)  
                                     VALUES(?,?,?,?,?)
