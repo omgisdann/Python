@@ -106,7 +106,7 @@ class Cadastro_de_chamados:
         self.botao_chamadosregistrados = tk.Button(self.barra_lateral, text='Quantidade de chamados', bg="#174B78", fg="#FFFFFF", width=20, relief="flat", bd=0, activebackground="#174B78", activeforeground="white", highlightthickness=0, font=("Arial", 9, "bold"), command=self.quantidade_chamados)
         self.botao_chamadosregistrados.place(x=3, y=105)
 
-        self.central_de_consultas = tk.Button(self.barra_lateral, text='Central de Consultas', bg="#174B78", fg="#FFFFFF", width=20, relief="flat", bd=0, activebackground="#174B78", activeforeground="white", highlightthickness=0, font=("Arial", 9, "bold"), command=self.quantidade_chamados)
+        self.central_de_consultas = tk.Button(self.barra_lateral, text='Central de Consultas', bg="#174B78", fg="#FFFFFF", width=20, relief="flat", bd=0, activebackground="#174B78", activeforeground="white", highlightthickness=0, font=("Arial", 9, "bold"), command=self.central_de_consultas)
         self.central_de_consultas.place(x=0, y=150)
 
         try:
@@ -315,6 +315,56 @@ class Cadastro_de_chamados:
         x = (largura_tela - largura_janela) // 2
         y = (altura_tela - altura_janela) // 2
         nova.geometry(f"{largura_janela}x{altura_janela}+{x}+{y}")
+
+
+    def central_de_consultas(self):
+        self.segunda_janela = tk.Toplevel(self.janela)
+        self.segunda_janela.geometry("300x150")
+        self.segunda_janela.title("Central de Consultas")
+        botao_departamento = tk.Button(self.segunda_janela, text="Consultas por Departamentos", background="#FFFFFF", foreground="#050404", width=30, command=self.pg_inicial_departamentos)
+        botao_departamento.place(x=40, y=0)
+
+        largura_janela = 300
+        altura_janela = 150
+        largura_tela = self.segunda_janela.winfo_screenwidth()
+        altura_tela = self.segunda_janela.winfo_screenheight()
+        x = (largura_tela - largura_janela) // 2
+        y = (altura_tela - altura_janela) // 2
+        self.segunda_janela.geometry(f"{largura_janela}x{altura_janela}+{x}+{y}")
+
+
+    def pg_inicial_departamentos(self):
+        self.janela_departamento = tk.Toplevel(self.segunda_janela)
+        self.janela_departamento.title("Consulta Por Departamento")
+        self.janela_departamento.geometry("800x700")
+        label_departamento = tk.Label(self.janela_departamento, text='Digite o Nome do Departamento desejado:')
+        label_departamento.place(x=400, y=90, anchor="center")
+        self.nomedepartamento = tk.Entry(self.janela_departamento, width=40)
+        self.nomedepartamento.place(x=400, y=140, anchor="center")
+        botao_confirmar = tk.Button(self.janela_departamento, text="Consultar", command=self.select_departamentos)
+        botao_confirmar.place(x=400, y=185, anchor="center")
+
+
+    def select_departamentos(self):
+        conexao = sqlite3.connect("sistemasp.db")   
+        cursor = conexao.cursor()
+
+        cursor.execute("""
+        SELECT *
+        FROM chamados
+        where departamento = ?
+        """, [self.nomedepartamento.get()])
+
+
+
+        dados = cursor.fetchall()
+        print(dados)
+
+        informacoes = tk.Label(self.janela_departamento, text=f'Resultados: {dados}')
+        informacoes.place(x=50, y=250, width=700)
+
+        
+        
 
 teste = Cadastro_de_chamados()
 teste.janela.mainloop()
