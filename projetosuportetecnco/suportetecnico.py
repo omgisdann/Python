@@ -324,6 +324,9 @@ class Cadastro_de_chamados:
         botao_departamento = tk.Button(self.segunda_janela, text="Consultas por Departamentos", background="#FFFFFF", foreground="#050404", width=30, command=self.pg_inicial_departamentos)
         botao_departamento.place(x=40, y=0)
 
+        botao_categoria = tk.Button(self.segunda_janela, text="Consultas por Categoria", background="#FFFFFF", foreground="#050404", width=30, command=self.pg_inicial_categorias)
+        botao_categoria.place(x=40, y=45)
+
         largura_janela = 300
         altura_janela = 150
         largura_tela = self.segunda_janela.winfo_screenwidth()
@@ -345,6 +348,17 @@ class Cadastro_de_chamados:
         botao_confirmar.place(x=400, y=185, anchor="center")
 
 
+    def pg_inicial_categorias(self):
+        self.janela_categorias = tk.Toplevel(self.segunda_janela)
+        self.janela_categorias.title("Consulta Por Categorias")
+        self.janela_categorias.geometry("800x700")
+        label_categoria = tk.Label(self.janela_categorias, text='Digite o Nome da Categoria desejada:')
+        label_categoria.place(x=400, y=90, anchor="center")
+        self.nomedacategoria = tk.Entry(self.janela_categorias, width=40)
+        self.nomedacategoria.place(x=400, y=140, anchor="center")
+        botao_confirmar = tk.Button(self.janela_categorias, text="Consultar", command=self.select_categoria)
+        botao_confirmar.place(x=400, y=185, anchor="center")
+
     def select_departamentos(self):
         conexao = sqlite3.connect("sistemasp.db")   
         cursor = conexao.cursor()
@@ -358,13 +372,73 @@ class Cadastro_de_chamados:
 
 
         dados = cursor.fetchall()
-        print(dados)
+        conexao.close()
 
-        informacoes = tk.Label(self.janela_departamento, text=f'Resultados: {dados}')
-        informacoes.place(x=50, y=250, width=700)
+        if hasattr(self, "tabela_resultados"):
+            self.tabela_resultados.destroy()
 
-        
-        
+        self.tabela_resultados = ttk.Treeview(self.janela_departamento, columns=("ID", "Nome", "Departamento", "Categoria", "Prioridade", "Observação"), show="headings")
+
+        self.tabela_resultados.heading("ID", text="ID")
+        self.tabela_resultados.heading("Nome", text="Solicitante")
+        self.tabela_resultados.heading("Departamento", text="Departamento")
+        self.tabela_resultados.heading("Categoria", text="Categoria")
+        self.tabela_resultados.heading("Prioridade", text="Prioridade")
+        self.tabela_resultados.heading("Observação", text="Observação")
+
+        self.tabela_resultados.column("ID", width=40, anchor="center")
+        self.tabela_resultados.column("Nome", width=130)
+        self.tabela_resultados.column("Departamento", width=110)
+        self.tabela_resultados.column("Categoria", width=130)
+        self.tabela_resultados.column("Prioridade", width=90, anchor="center")
+        self.tabela_resultados.column("Observação", width=800)
+
+        self.tabela_resultados.place(x=20, y=250, width=760, height=400)
+
+        for dado in dados:
+            prioridade = "Alta" if dado[4] == 1 else "Baixa"
+            self.tabela_resultados.insert("", tk.END, values=(dado[0], dado[1], dado[2], dado[3], prioridade, dado[5]))
+            
+    def select_categoria(self):
+        conexao = sqlite3.connect("sistemasp.db")   
+        cursor = conexao.cursor()
+
+        cursor.execute("""
+        SELECT *
+        FROM chamados
+        where categoria = ?
+        """, [self.nomedacategoria.get()])
+
+
+
+        dados = cursor.fetchall()
+        conexao.close()
+
+        if hasattr(self, "tabela_resultados"):
+            self.tabela_resultados.destroy()
+
+        self.tabela_resultados = ttk.Treeview(self.janela_categorias, columns=("ID", "Nome", "Departamento", "Categoria", "Prioridade", "Observação"), show="headings")
+
+        self.tabela_resultados.heading("ID", text="ID")
+        self.tabela_resultados.heading("Nome", text="Solicitante")
+        self.tabela_resultados.heading("Departamento", text="Departamento")
+        self.tabela_resultados.heading("Categoria", text="Categoria")
+        self.tabela_resultados.heading("Prioridade", text="Prioridade")
+        self.tabela_resultados.heading("Observação", text="Observação")
+
+        self.tabela_resultados.column("ID", width=40, anchor="center")
+        self.tabela_resultados.column("Nome", width=130)
+        self.tabela_resultados.column("Departamento", width=110)
+        self.tabela_resultados.column("Categoria", width=130)
+        self.tabela_resultados.column("Prioridade", width=90, anchor="center")
+        self.tabela_resultados.column("Observação", width=800)
+
+        self.tabela_resultados.place(x=20, y=250, width=760, height=400)
+
+        for dado in dados:
+            prioridade = "Alta" if dado[4] == 1 else "Baixa"
+            self.tabela_resultados.insert("", tk.END, values=(dado[0], dado[1], dado[2], dado[3], prioridade, dado[5]))
+            
 
 teste = Cadastro_de_chamados()
 teste.janela.mainloop()
