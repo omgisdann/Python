@@ -5,6 +5,8 @@ from tkinter import messagebox
 import sqlite3
 import datetime
 
+
+qt_chamados_ja_registrados = 0 
 class Cadastro_de_chamados:
     def __init__(self):
         self.janela = tk.Tk()
@@ -98,6 +100,14 @@ class Cadastro_de_chamados:
         self.botao_novo_chamado = tk.Button(self.barra_lateral, text='Criar Chamado', bg="#174B78", fg="#FFFFFF", width=20, relief="flat", bd=0, activebackground="#174B78", activeforeground="white", highlightthickness=0, font=("Arial", 9, "bold"), command=self.acessar_novo_chamado)
         self.botao_novo_chamado.place(x=0, y=15)
 
+        self.botao_pesquisar_chamada = tk.Button(self.barra_lateral, text='Pesquisar Chamado', bg="#174B78", fg="#FFFFFF", width=20, relief="flat", bd=0, activebackground="#174B78", activeforeground="white", highlightthickness=0, font=("Arial", 9, "bold"), command=self.procurar_chamado)
+        self.botao_pesquisar_chamada.place(x=0, y=60)
+
+        self.botao_chamadosregistrados = tk.Button(self.barra_lateral, text='Quantidade de chamados', bg="#174B78", fg="#FFFFFF", width=20, relief="flat", bd=0, activebackground="#174B78", activeforeground="white", highlightthickness=0, font=("Arial", 9, "bold"), command=self.quantidade_chamados)
+        self.botao_chamadosregistrados.place(x=3, y=105)
+
+        self.central_de_consultas = tk.Button(self.barra_lateral, text='Central de Consultas', bg="#174B78", fg="#FFFFFF", width=20, relief="flat", bd=0, activebackground="#174B78", activeforeground="white", highlightthickness=0, font=("Arial", 9, "bold"), command=self.quantidade_chamados)
+        self.central_de_consultas.place(x=0, y=150)
 
         try:
             conexao = sqlite3.connect("sistemasp.db")
@@ -143,6 +153,8 @@ class Cadastro_de_chamados:
             INSERT INTO chamados(nome, departamento, categoria, prioridade, descricao)
             VALUES(?,?,?,?,?)
         """, (nome, departamento, categoria, prioridade, descricao))
+        global qt_chamados_ja_registrados
+        qt_chamados_ja_registrados +=1
 
         conexao.commit()
         messagebox.showinfo("Conclusão", "Chamado Cadastrado com Sucesso!")
@@ -281,6 +293,28 @@ class Cadastro_de_chamados:
     def acessar_novo_chamado(self):
         self.frame.lift()
         self.entrada_nome.focus_set()
+
+
+    def procurar_chamado(self):
+        self.frame.lift()
+        self.entrada_id_chamado.focus_set()
+
+
+    def quantidade_chamados(self):
+        nova = tk.Toplevel(self.janela)
+        nova.geometry("300x150")
+        primeiro = tk.Label(nova, text="Quantidade de chamados já registrados:")
+        primeiro.place(x=0, y=0)
+        segundo = tk.Label(nova, text=qt_chamados_ja_registrados, font=("Arial", 20))
+        segundo.place(x=140, y=50)
+
+        largura_janela = 300
+        altura_janela = 150
+        largura_tela = nova.winfo_screenwidth()
+        altura_tela = nova.winfo_screenheight()
+        x = (largura_tela - largura_janela) // 2
+        y = (altura_tela - altura_janela) // 2
+        nova.geometry(f"{largura_janela}x{altura_janela}+{x}+{y}")
 
 teste = Cadastro_de_chamados()
 teste.janela.mainloop()
